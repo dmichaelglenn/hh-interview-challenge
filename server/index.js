@@ -10,7 +10,7 @@ mongoose.connect(process.env.MONGODB_URI);
 const ColorSchema = mongoose.Schema({
     h: Number,
     s: Number,
-    v: Number
+    l: Number
 });
 
 const Color = mongoose.model("Color", ColorSchema);
@@ -18,6 +18,7 @@ const Color = mongoose.model("Color", ColorSchema);
 const app = express();
 
 app.use(express.static(__dirname + "/../public"));
+app.use(express.static(__dirname + "/../admin"));
 app.use(bodyParser.json());
 
 function listResources(Model) {
