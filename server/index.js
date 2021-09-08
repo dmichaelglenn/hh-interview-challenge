@@ -30,6 +30,19 @@ function listResources(Model) {
     }
 }
 
+function getRandomResource(Model) {
+    return function (req, res, next) {
+        Model.count().exec(function (err, count) {
+            let random = Math.floor(Math.random() * count)
+        
+            Model.findOne().skip(random).exec(function (err, doc) {
+                if (err) return next(err);
+                res.json(doc);
+            })
+        })
+    }
+}
+
 function createResource(Model) {
     return function (req, res, next) {
         let resource = new Model(req.body);
@@ -40,7 +53,10 @@ function createResource(Model) {
     };
 }
 
+
+
 app.get("/colors", listResources(Color));
+app.get("/colors/random", getRandomResource(Color));
 app.post("/colors", createResource(Color));
 
 const server = app.listen(port, function () {
