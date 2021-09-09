@@ -377,6 +377,9 @@ header .container {
 * {
   box-sizing: border-box;
 }
+body {
+  font-family: "Source Serif Pro", serif;
+}
 .content {
   display: flex;
   height: 100%;
