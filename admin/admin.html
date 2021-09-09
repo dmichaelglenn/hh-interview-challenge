@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HH Interview Admin Interface</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .picker-wrap {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+
+        #message {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="picker-wrap">
+        <div id="picker"></div>
+        <button id="add-color">Add Color to Database</button>
+        <p id="message"></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
