@@ -1,5 +1,5 @@
 import { getAllColors, placeTiles } from "./operations";
-import { generatePagination } from './pagination';
+import { getPaginatedTiles, generatePagination } from './pagination';
 import { mainWindow } from "./variables";
 
 
@@ -15,7 +15,9 @@ async function initialState() {
     const colors = await getAllColors();
     setActiveCollection(colors);
     generatePagination(activeCollection);
-    placeTiles(colors);
+    const tiles = getPaginatedTiles(activeCollection, 1);
+    console.log(tiles);
+    placeTiles(tiles);
     console.log('initial', colors);
     // setActiveCollection(colors);
     // placeTiles(activeCollection);

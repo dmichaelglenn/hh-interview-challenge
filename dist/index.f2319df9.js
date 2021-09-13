@@ -562,7 +562,9 @@ async function initialState() {
     const colors = await _operations.getAllColors();
     setActiveCollection(colors);
     _pagination.generatePagination(activeCollection);
-    _operations.placeTiles(colors);
+    const tiles = _pagination.getPaginatedTiles(activeCollection, 1);
+    console.log(tiles);
+    _operations.placeTiles(tiles);
     console.log('initial', colors);
 // setActiveCollection(colors);
 // placeTiles(activeCollection);
@@ -573,20 +575,44 @@ initialState(); // setActiveCollection(getAllColors());
 },{"./operations":"gq2x4","./variables":"aRp6g","./pagination":"4h2OG"}],"4h2OG":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getPaginatedTiles", ()=>getPaginatedTiles
+);
 parcelHelpers.export(exports, "generatePagination", ()=>generatePagination
 );
 var _variables = require("./variables");
+var _operations = require("./operations");
+function getPaginatedTiles(activeCollection, page) {
+    const max = _variables.perPageCount * page;
+    const min = max - _variables.perPageCount;
+    let tiles = [];
+    for(var i = min; i < max; i++){
+        if (i > activeCollection.length - 1) break;
+        tiles.push(activeCollection[i]);
+    }
+    console.log('min', min, 'max', max);
+    return tiles;
+}
+function handlePaginationClick(e) {
+    const page = e.target.dataset.page;
+    const tiles = getPaginatedTiles(activeCollection, page);
+    _operations.placeTiles(tiles);
+    _variables.paginationWrap.querySelector('.active').classList.remove('active');
+    e.target.classList.add('active');
+}
 function generatePagination(activeCollection) {
     _variables.paginationWrap.innerHTML = '';
     let pageCount = Math.ceil(activeCollection.length / _variables.perPageCount);
     for(i = 0; i < pageCount; i++){
         let el = document.createElement('li');
-        el.innerText = i;
+        el.innerText = i + 1;
+        el.dataset.page = i + 1;
+        el.addEventListener('click', handlePaginationClick);
+        if (i === 0) el.classList.add('active');
         _variables.paginationWrap.append(el);
     }
     console.log('page count', pageCount);
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./variables":"aRp6g"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./variables":"aRp6g","./operations":"gq2x4"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
 
 //# sourceMappingURL=index.f2319df9.js.map
