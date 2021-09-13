@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cors = require('cors');
 const port = process.env.PORT || 8081;
 
 mongoose.connect(process.env.MONGODB_URI);
@@ -10,7 +11,8 @@ mongoose.connect(process.env.MONGODB_URI);
 const ColorSchema = mongoose.Schema({
     h: Number,
     s: Number,
-    l: Number
+    l: Number,
+    hex: String
 });
 
 const Color = mongoose.model("Color", ColorSchema);
@@ -20,6 +22,7 @@ const app = express();
 app.use(express.static(__dirname + "/../public"));
 app.use(express.static(__dirname + "/../admin"));
 app.use(bodyParser.json());
+app.use(cors());
 
 function listResources(Model) {
     return function (req, res, next) {

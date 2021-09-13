@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "Welcome to Helpful Human's at home proficiency challenge! This challenge gauges your knowledge on a few different metrics that we use, in part, to evaluate your skills. In this repo, you will find the assets that are required to replicate the design that is also included in this repo. Both .sketch and .png assets are available.",
   "main": "index.js",
+  "source": "public/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/index.js",
-    "dev:start": "nodemon server/index.js"
+    "dev:start": "nodemon server/index.js",
+    "dev:start-frontend": "parcel",
+    "dev:build-frontend": "parcel"
   },
   "repository": {
     "type": "git",
@@ -20,11 +23,14 @@
   "homepage": "https://github.com/HelpfulHuman/interview-challenge#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "mongoose": "^6.0.5"
+    "mongoose": "^6.0.5",
+    "parcel": "^2.0.0-rc.0"
   },
   "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.0-rc.0",
     "nodemon": "^2.0.12"
   }
 }
