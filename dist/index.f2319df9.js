@@ -457,13 +457,12 @@ function hmrAcceptRun(bundle, id) {
 },{}],"8fVck":[function(require,module,exports) {
 var _variables = require("./src/scripts/variables");
 var _operations = require("./src/scripts/operations");
-var _colorGenerator = require("./src/scripts/colorGenerator");
 var _components = require("./src/scripts/components");
 const urlParams = new URLSearchParams(window.location.search);
 const adminStatus = urlParams.get('admin');
 if (adminStatus === 'yes') document.querySelector('body').classList.add('admin');
 
-},{"./src/scripts/variables":"aRp6g","./src/scripts/operations":"gq2x4","./src/scripts/colorGenerator":"jEMSm","./src/scripts/components":"7u8Xe"}],"aRp6g":[function(require,module,exports) {
+},{"./src/scripts/variables":"aRp6g","./src/scripts/operations":"gq2x4","./src/scripts/components":"7u8Xe"}],"aRp6g":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "baseColorsUrl", ()=>baseColorsUrl
@@ -539,7 +538,7 @@ parcelHelpers.export(exports, "getColorByHex", ()=>getColorByHex
 );
 var _variables = require("./variables");
 var _pagination = require("./pagination");
-var _activeWindow = require("./activeWindow");
+var _activeWindow = require("./components/activeWindow");
 function setActiveCollection(newCollection) {
     activeCollection = newCollection;
     _pagination.generatePagination(activeCollection);
@@ -586,7 +585,7 @@ async function getColorByHex(hex) {
     return color;
 }
 
-},{"./variables":"aRp6g","./pagination":"4h2OG","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./activeWindow":"jNgGd"}],"4h2OG":[function(require,module,exports) {
+},{"./variables":"aRp6g","./pagination":"4h2OG","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./components/activeWindow":"9PCLO"}],"4h2OG":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getPaginatedTiles", ()=>getPaginatedTiles
@@ -625,14 +624,14 @@ function generatePagination(activeCollection) {
     }
 }
 
-},{"./variables":"aRp6g","./operations":"gq2x4","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"jNgGd":[function(require,module,exports) {
+},{"./variables":"aRp6g","./operations":"gq2x4","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"9PCLO":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "openActiveWindow", ()=>openActiveWindow
 );
-var _variables = require("./variables");
-var _operations = require("./operations");
-var _helpers = require("./helpers");
+var _variables = require("../variables");
+var _operations = require("../operations");
+var _helpers = require("../helpers");
 function generateFakeTile(color) {
     let hex = _helpers.HSLToHex(color.h, color.s, color.l);
     let tile = _variables.swatchTemplate.content.firstElementChild.cloneNode(true);
@@ -682,7 +681,7 @@ function closeActiveWindow() {
 }
 document.getElementById('clear').addEventListener('click', closeActiveWindow);
 
-},{"./variables":"aRp6g","./operations":"gq2x4","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./helpers":"i1e5p"}],"i1e5p":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../variables":"aRp6g","../operations":"gq2x4","../helpers":"i1e5p"}],"i1e5p":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "HSLToHex", ()=>HSLToHex
@@ -751,10 +750,47 @@ function generateRandomHSL() {
     };
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"jEMSm":[function(require,module,exports) {
-var _variables = require("./variables");
-var _helpers = require("./helpers");
-var _operations = require("./operations");
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"7u8Xe":[function(require,module,exports) {
+var _mainWindow = require("./components/mainWindow");
+var _activeWindow = require("./components/activeWindow");
+var _sidebar = require("./components/sidebar");
+var _colorGenerator = require("./components/colorGenerator");
+
+},{"./components/mainWindow":"iRG7P","./components/activeWindow":"9PCLO","./components/sidebar":"7D917","./components/colorGenerator":"a0c80"}],"iRG7P":[function(require,module,exports) {
+var _operations = require("../operations");
+var _pagination = require("../pagination");
+async function setInitialState() {
+    let colors = await _operations.getAllColors();
+    _operations.setActiveCollection(colors);
+    let tiles = _pagination.getPaginatedTiles(activeCollection, 1);
+    _operations.placeTiles(tiles);
+}
+setInitialState();
+
+},{"../operations":"gq2x4","../pagination":"4h2OG"}],"7D917":[function(require,module,exports) {
+var _activeWindow = require("./activeWindow");
+var _operations = require("../operations");
+var _pagination = require("../pagination");
+async function handleCategoryClick(e) {
+    let colors = await _operations.getColorsByCategory(e.target.innerText.toLowerCase());
+    _operations.setActiveCollection(colors);
+    let tiles = _pagination.getPaginatedTiles(activeCollection, 1);
+    _operations.placeTiles(tiles);
+}
+async function handleRandomClick(e) {
+    let color = await _operations.getRandomColor();
+    _activeWindow.openActiveWindow(color);
+}
+document.querySelectorAll('.color-category').forEach(function(el) {
+    console.log(el);
+    el.addEventListener('click', handleCategoryClick);
+});
+document.getElementById('random').addEventListener('click', handleRandomClick);
+
+},{"./activeWindow":"9PCLO","../operations":"gq2x4","../pagination":"4h2OG"}],"a0c80":[function(require,module,exports) {
+var _variables = require("../variables");
+var _helpers = require("../helpers");
+var _operations = require("../operations");
 function generateAndAddRandomColors(count) {
     for(let i = 0; i < count; i++){
         let hsl = _helpers.generateRandomHSL();
@@ -795,42 +831,6 @@ if (document.getElementById('generate-by-count').length > 0) document.getElement
  // export { generateAndAddRandomColors };
  // var randomColor = Math.floor(Math.random()*16777215).toString(16);
 
-},{"./variables":"aRp6g","./helpers":"i1e5p","./operations":"gq2x4"}],"7u8Xe":[function(require,module,exports) {
-var _mainWindow = require("./mainWindow");
-var _activeWindow = require("./activeWindow");
-var _sidebar = require("./sidebar");
-
-},{"./mainWindow":"ktYJj","./sidebar":"ingt4","./activeWindow":"jNgGd"}],"ktYJj":[function(require,module,exports) {
-var _operations = require("./operations");
-var _pagination = require("./pagination");
-async function setInitialState() {
-    let colors = await _operations.getAllColors();
-    _operations.setActiveCollection(colors);
-    let tiles = _pagination.getPaginatedTiles(activeCollection, 1);
-    _operations.placeTiles(tiles);
-}
-setInitialState();
-
-},{"./operations":"gq2x4","./pagination":"4h2OG"}],"ingt4":[function(require,module,exports) {
-var _activeWindow = require("./activeWindow");
-var _operations = require("./operations");
-var _pagination = require("./pagination");
-async function handleCategoryClick(e) {
-    let colors = await _operations.getColorsByCategory(e.target.innerText.toLowerCase());
-    _operations.setActiveCollection(colors);
-    let tiles = _pagination.getPaginatedTiles(activeCollection, 1);
-    _operations.placeTiles(tiles);
-}
-async function handleRandomClick(e) {
-    let color = await _operations.getRandomColor();
-    _activeWindow.openActiveWindow(color);
-}
-document.querySelectorAll('.color-category').forEach(function(el) {
-    console.log(el);
-    el.addEventListener('click', handleCategoryClick);
-});
-document.getElementById('random').addEventListener('click', handleRandomClick);
-
-},{"./operations":"gq2x4","./pagination":"4h2OG","./activeWindow":"jNgGd"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
+},{"../variables":"aRp6g","../helpers":"i1e5p","../operations":"gq2x4"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
 
 //# sourceMappingURL=index.f2319df9.js.map

@@ -1,6 +1,6 @@
 import { baseColorsUrl, mainWindow, swatchTemplate } from './variables';
 import { generatePagination } from './pagination';
-import { openActiveWindow } from './activeWindow';
+import { openActiveWindow } from './components/activeWindow';
 
 function setActiveCollection(newCollection) {
     activeCollection = newCollection;

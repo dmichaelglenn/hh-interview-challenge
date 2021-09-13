@@ -1,6 +1,6 @@
-import { baseColorsUrl } from './variables';
-import { HSLToHex, generateRandomHSL } from './helpers';
-import { getColorByHex } from './operations';
+import { baseColorsUrl } from '../variables';
+import { HSLToHex, generateRandomHSL } from '../helpers';
+import { getColorByHex } from '../operations';
 
 
 function generateAndAddRandomColors(count) {

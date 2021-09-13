@@ -1,3 +1,4 @@
-import './mainWindow';
-import './activeWindow';
-import './sidebar';
+import './components/mainWindow';
+import './components/activeWindow';
+import './components/sidebar';
+import './components/colorGenerator';

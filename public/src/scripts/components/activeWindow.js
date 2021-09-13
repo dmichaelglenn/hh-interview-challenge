@@ -1,6 +1,6 @@
-import { activeWindow, fakeTiles, swatchTemplate } from './variables';
-import { setActiveColor } from './operations';
-import { HSLToHex } from './helpers';
+import { activeWindow, fakeTiles, swatchTemplate } from '../variables';
+import { setActiveColor } from '../operations';
+import { HSLToHex } from '../helpers';
 
 function generateFakeTile(color) {
         let hex = HSLToHex(color.h, color.s, color.l);

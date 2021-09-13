@@ -1,5 +1,5 @@
-import { setActiveCollection, getAllColors, placeTiles } from "./operations";
-import { getPaginatedTiles } from './pagination';
+import { setActiveCollection, getAllColors, placeTiles } from "../operations";
+import { getPaginatedTiles } from '../pagination';
 
 async function setInitialState() {
     let colors = await getAllColors();

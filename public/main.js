@@ -1,6 +1,5 @@
 import { baseColorsUrl } from './src/scripts/variables';
 import { getAllColors } from './src/scripts/operations';
-import './src/scripts/colorGenerator';
 import './src/scripts/components';
 
 

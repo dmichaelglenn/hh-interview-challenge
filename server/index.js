@@ -103,8 +103,8 @@ function resolveColorQuery(category) {
                             $gte: 69
                         },
                         l: {
-                           $gte: 30,
-                           $lte: 82 
+                            $gte: 30,
+                            $lte: 82
                         }
                     }
 
@@ -173,8 +173,8 @@ function resolveColorQuery(category) {
         case 'purple':
             query = {
                 h: {
-                  $gte: 263,
-                  $lte: 334  
+                    $gte: 263,
+                    $lte: 334
                 },
                 s: {
                     $gte: 20,

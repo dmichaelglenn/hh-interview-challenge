@@ -1,6 +1,6 @@
 import { openActiveWindow } from "./activeWindow";
-import { setActiveCollection, setActiveColor, getColorsByCategory, getRandomColor, placeTiles } from "./operations";
-import { getPaginatedTiles } from "./pagination";
+import { setActiveCollection, setActiveColor, getColorsByCategory, getRandomColor, placeTiles } from "../operations";
+import { getPaginatedTiles } from "../pagination";
 
 async function handleCategoryClick(e) {
     let colors = await getColorsByCategory(e.target.innerText.toLowerCase());
