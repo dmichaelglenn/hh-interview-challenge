@@ -60,7 +60,8 @@ button {
         flex-direction: column;
         width: 100%;
         position: relative;
-        overflow: scroll;
+        overflow-x: hidden;
+        overflow-y: scroll;
 
         #main {
             display: flex;
