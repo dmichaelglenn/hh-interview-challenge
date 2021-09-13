@@ -466,12 +466,18 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "baseColorsUrl", ()=>baseColorsUrl
 );
+parcelHelpers.export(exports, "perPageCount", ()=>perPageCount
+);
 parcelHelpers.export(exports, "mainWindow", ()=>mainWindow
+);
+parcelHelpers.export(exports, "paginationWrap", ()=>paginationWrap
 );
 parcelHelpers.export(exports, "swatchTemplate", ()=>swatchTemplate
 );
 const baseColorsUrl = 'http://localhost:8080/colors';
+const perPageCount = 12;
 const mainWindow = document.getElementById('main');
+const paginationWrap = document.getElementById('pagination');
 const swatchTemplate = document.getElementById("swatch-template");
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"JacNc":[function(require,module,exports) {
@@ -527,13 +533,10 @@ function placeTiles(tiles) {
     _variables.mainWindow.innerHTML = '';
     console.log('tiles', tiles);
     tiles.forEach((color)=>{
-        console.log(_variables.swatchTemplate.content);
         const tile = _variables.swatchTemplate.content.firstElementChild.cloneNode(true);
         tile.querySelector('.color').style.backgroundColor = color.hex;
         tile.dataset.id = color._id;
         tile.dataset.hex = color.hex;
-        console.log(tile.querySelector('.color').style);
-        console.log(color);
         _variables.mainWindow.append(tile);
     });
 }
@@ -548,6 +551,7 @@ var _mainWindow = require("./mainWindow");
 
 },{"./mainWindow":"ktYJj"}],"ktYJj":[function(require,module,exports) {
 var _operations = require("./operations");
+var _pagination = require("./pagination");
 var _variables = require("./variables");
 console.log('mainwindow js');
 function setActiveCollection(newCollection) {
@@ -557,7 +561,10 @@ function setActiveCollection(newCollection) {
 async function initialState() {
     const colors = await _operations.getAllColors();
     setActiveCollection(colors);
-    _operations.placeTiles(colors);
+    _pagination.generatePagination(activeCollection);
+    const tiles = _pagination.getPaginatedTiles(activeCollection, 1);
+    console.log(tiles);
+    _operations.placeTiles(tiles);
     console.log('initial', colors);
 // setActiveCollection(colors);
 // placeTiles(activeCollection);
@@ -565,6 +572,45 @@ async function initialState() {
 initialState(); // setActiveCollection(getAllColors());
  // placeTiles(activeCollection);
 
-},{"./operations":"gq2x4","./variables":"aRp6g"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
+},{"./operations":"gq2x4","./variables":"aRp6g","./pagination":"4h2OG"}],"4h2OG":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getPaginatedTiles", ()=>getPaginatedTiles
+);
+parcelHelpers.export(exports, "generatePagination", ()=>generatePagination
+);
+var _variables = require("./variables");
+var _operations = require("./operations");
+function getPaginatedTiles(activeCollection, page) {
+    let max = _variables.perPageCount * page;
+    let min = max - _variables.perPageCount;
+    let tiles = [];
+    for(var i = min; i < max; i++){
+        if (i > activeCollection.length - 1) break;
+        tiles.push(activeCollection[i]);
+    }
+    return tiles;
+}
+function handlePaginationClick(e) {
+    let page = e.target.dataset.page;
+    let tiles = getPaginatedTiles(activeCollection, page);
+    _variables.paginationWrap.querySelector('.active').classList.remove('active');
+    e.target.classList.add('active');
+    _operations.placeTiles(tiles);
+}
+function generatePagination(activeCollection) {
+    let pageCount = Math.ceil(activeCollection.length / _variables.perPageCount);
+    _variables.paginationWrap.innerHTML = '';
+    for(i = 0; i < pageCount; i++){
+        let el = document.createElement('li');
+        el.innerText = i + 1;
+        el.dataset.page = i + 1;
+        el.addEventListener('click', handlePaginationClick);
+        if (i === 0) el.classList.add('active');
+        _variables.paginationWrap.append(el);
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./variables":"aRp6g","./operations":"gq2x4"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
 
 //# sourceMappingURL=index.f2319df9.js.map

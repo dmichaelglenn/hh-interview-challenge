@@ -5,18 +5,12 @@ function placeTiles(tiles) {
     mainWindow.innerHTML = '';
     console.log('tiles', tiles);
     tiles.forEach(color => {
-        console.log(swatchTemplate.content);
         const tile = swatchTemplate.content.firstElementChild.cloneNode(true);
         tile.querySelector('.color').style.backgroundColor = color.hex;
         tile.dataset.id = color._id;
         tile.dataset.hex = color.hex;
-        console.log(tile.querySelector('.color').style);
-        console.log(color);
-
-
 
         mainWindow.append(tile);
-
     });
 }
 
