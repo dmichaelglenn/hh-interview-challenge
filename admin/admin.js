@@ -48,7 +48,14 @@ const messageArea = document.getElementById('message');
 console.log(HSLToHex(43, 62, 100));
 
 document.getElementById('add-color').addEventListener('click', function() {
-    let data = colorPicker.color.hsl;
+  let data = {
+    h: colorPicker.color.hsl.h,
+    s: colorPicker.color.hsl.s,
+    l: colorPicker.color.hsl.l,
+    hex: colorPicker.color.hexString
+  }
+    // let data = {colorPicker.color.hsl, colorPicker.color.hexString};
+    console.log(data);
 
     fetch('http://localhost:8080/colors', {
         method: 'POST', 
@@ -60,7 +67,7 @@ document.getElementById('add-color').addEventListener('click', function() {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        let hex = HSLToHex(data.h, data.s, data.l);
+        let hex = data.hex;
         console.log(hex);
         messageArea.innerText = `Successfully added ${hex} to the database.`;
     })
