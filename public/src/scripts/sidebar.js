@@ -15,6 +15,7 @@ async function handleRandomClick(e) {
 }
 
 document.querySelectorAll('.color-category').forEach(function(el) {
+    console.log(el);
     el.addEventListener('click', handleCategoryClick);
 })
 

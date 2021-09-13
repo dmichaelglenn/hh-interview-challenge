@@ -4,6 +4,7 @@ import './src/scripts/colorGenerator';
 import './src/scripts/components';
 
 
+
 const urlParams = new URLSearchParams(window.location.search);
 const adminStatus = urlParams.get('admin');
 

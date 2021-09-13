@@ -463,7 +463,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const adminStatus = urlParams.get('admin');
 if (adminStatus === 'yes') document.querySelector('body').classList.add('admin');
 
-},{"./src/scripts/variables":"aRp6g","./src/scripts/operations":"gq2x4","./src/scripts/components":"7u8Xe","./src/scripts/colorGenerator":"jEMSm"}],"aRp6g":[function(require,module,exports) {
+},{"./src/scripts/variables":"aRp6g","./src/scripts/operations":"gq2x4","./src/scripts/colorGenerator":"jEMSm","./src/scripts/components":"7u8Xe"}],"aRp6g":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "baseColorsUrl", ()=>baseColorsUrl
@@ -571,7 +571,7 @@ async function getColorByHex(hex) {
     return color;
 }
 
-},{"./variables":"aRp6g","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./pagination":"4h2OG"}],"4h2OG":[function(require,module,exports) {
+},{"./variables":"aRp6g","./pagination":"4h2OG","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"4h2OG":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getPaginatedTiles", ()=>getPaginatedTiles
@@ -610,43 +610,7 @@ function generatePagination(activeCollection) {
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./variables":"aRp6g","./operations":"gq2x4"}],"7u8Xe":[function(require,module,exports) {
-var _mainWindow = require("./mainWindow");
-var _activeWindow = require("./activeWindow");
-var _sidebar = require("./sidebar");
-
-},{"./mainWindow":"ktYJj","./sidebar":"ingt4","./activeWindow":"9yvNQ"}],"ktYJj":[function(require,module,exports) {
-var _operations = require("./operations");
-var _pagination = require("./pagination");
-async function setInitialState() {
-    let colors = await _operations.getAllColors();
-    _operations.setActiveCollection(colors);
-    let tiles = _pagination.getPaginatedTiles(activeCollection, 1);
-    _operations.placeTiles(tiles);
-}
-setInitialState();
-
-},{"./operations":"gq2x4","./pagination":"4h2OG"}],"ingt4":[function(require,module,exports) {
-var _operations = require("./operations");
-var _pagination = require("./pagination");
-async function handleCategoryClick(e) {
-    let colors = await _operations.getColorsByCategory(e.target.innerText.toLowerCase());
-    _operations.setActiveCollection(colors);
-    let tiles = _pagination.getPaginatedTiles(activeCollection, 1);
-    _operations.placeTiles(tiles);
-}
-async function handleRandomClick(e) {
-    let color = _operations.getRandomColor();
-    console.log(color);
-}
-document.querySelectorAll('.color-category').forEach(function(el) {
-    el.addEventListener('click', handleCategoryClick);
-});
-document.getElementById('random').addEventListener('click', handleRandomClick);
-
-},{"./operations":"gq2x4","./pagination":"4h2OG"}],"9yvNQ":[function(require,module,exports) {
-
-},{}],"jEMSm":[function(require,module,exports) {
+},{"./variables":"aRp6g","./operations":"gq2x4","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"jEMSm":[function(require,module,exports) {
 var _variables = require("./variables");
 var _helpers = require("./helpers");
 var _operations = require("./operations");
@@ -686,10 +650,11 @@ function handleGeneratorClick() {
     console.log('going with count', count);
     generateAndAddRandomColors(count);
 }
-document.getElementById('generate-by-count').addEventListener('click', handleGeneratorClick); // export { generateAndAddRandomColors };
+if (document.getElementById('generate-by-count').length > 0) document.getElementById('generate-by-count').addEventListener('click', handleGeneratorClick);
+ // export { generateAndAddRandomColors };
  // var randomColor = Math.floor(Math.random()*16777215).toString(16);
 
-},{"./operations":"gq2x4","./variables":"aRp6g","./helpers":"i1e5p"}],"i1e5p":[function(require,module,exports) {
+},{"./variables":"aRp6g","./helpers":"i1e5p","./operations":"gq2x4"}],"i1e5p":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "HSLToHex", ()=>HSLToHex
@@ -758,6 +723,43 @@ function generateRandomHSL() {
     };
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"7u8Xe":[function(require,module,exports) {
+var _mainWindow = require("./mainWindow");
+var _activeWindow = require("./activeWindow");
+var _sidebar = require("./sidebar");
+
+},{"./mainWindow":"ktYJj","./activeWindow":"9yvNQ","./sidebar":"ingt4"}],"ktYJj":[function(require,module,exports) {
+var _operations = require("./operations");
+var _pagination = require("./pagination");
+async function setInitialState() {
+    let colors = await _operations.getAllColors();
+    _operations.setActiveCollection(colors);
+    let tiles = _pagination.getPaginatedTiles(activeCollection, 1);
+    _operations.placeTiles(tiles);
+}
+setInitialState();
+
+},{"./operations":"gq2x4","./pagination":"4h2OG"}],"9yvNQ":[function(require,module,exports) {
+
+},{}],"ingt4":[function(require,module,exports) {
+var _operations = require("./operations");
+var _pagination = require("./pagination");
+async function handleCategoryClick(e) {
+    let colors = await _operations.getColorsByCategory(e.target.innerText.toLowerCase());
+    _operations.setActiveCollection(colors);
+    let tiles = _pagination.getPaginatedTiles(activeCollection, 1);
+    _operations.placeTiles(tiles);
+}
+async function handleRandomClick(e) {
+    let color = _operations.getRandomColor();
+    console.log(color);
+}
+document.querySelectorAll('.color-category').forEach(function(el) {
+    console.log(el);
+    el.addEventListener('click', handleCategoryClick);
+});
+document.getElementById('random').addEventListener('click', handleRandomClick);
+
+},{"./operations":"gq2x4","./pagination":"4h2OG"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
 
 //# sourceMappingURL=index.f2319df9.js.map
