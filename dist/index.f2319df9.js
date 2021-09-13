@@ -472,6 +472,8 @@ parcelHelpers.export(exports, "perPageCount", ()=>perPageCount
 );
 parcelHelpers.export(exports, "mainWindow", ()=>mainWindow
 );
+parcelHelpers.export(exports, "activeWindow", ()=>activeWindow
+);
 parcelHelpers.export(exports, "paginationWrap", ()=>paginationWrap
 );
 parcelHelpers.export(exports, "swatchTemplate", ()=>swatchTemplate
@@ -479,6 +481,7 @@ parcelHelpers.export(exports, "swatchTemplate", ()=>swatchTemplate
 const baseColorsUrl = 'http://localhost:8080/colors';
 const perPageCount = 12;
 const mainWindow = document.getElementById('main');
+const activeWindow = document.getElementById('active-window');
 const paginationWrap = document.getElementById('pagination');
 const swatchTemplate = document.getElementById("swatch-template");
 
@@ -519,6 +522,8 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "setActiveCollection", ()=>setActiveCollection
 );
+parcelHelpers.export(exports, "setActiveColor", ()=>setActiveColor
+);
 parcelHelpers.export(exports, "placeTiles", ()=>placeTiles
 );
 parcelHelpers.export(exports, "getAllColors", ()=>getAllColors
@@ -531,9 +536,13 @@ parcelHelpers.export(exports, "getColorByHex", ()=>getColorByHex
 );
 var _variables = require("./variables");
 var _pagination = require("./pagination");
+var _activeWindow = require("./activeWindow");
 function setActiveCollection(newCollection) {
     activeCollection = newCollection;
     _pagination.generatePagination(activeCollection);
+}
+function setActiveColor(color) {
+    activeColor = color;
 }
 function placeTiles(tiles) {
     _variables.mainWindow.innerHTML = '';
@@ -543,6 +552,9 @@ function placeTiles(tiles) {
         tile.querySelector('.label').innerText = `#${color.hex}`;
         tile.dataset.id = color._id;
         tile.dataset.hex = color.hex;
+        tile.addEventListener('click', function() {
+            _activeWindow.openActiveWindow(color);
+        });
         _variables.mainWindow.append(tile);
     });
 }
@@ -571,7 +583,7 @@ async function getColorByHex(hex) {
     return color;
 }
 
-},{"./variables":"aRp6g","./pagination":"4h2OG","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"4h2OG":[function(require,module,exports) {
+},{"./variables":"aRp6g","./pagination":"4h2OG","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./activeWindow":"jNgGd"}],"4h2OG":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getPaginatedTiles", ()=>getPaginatedTiles
@@ -609,6 +621,24 @@ function generatePagination(activeCollection) {
         _variables.paginationWrap.append(el);
     }
 }
+
+},{"./variables":"aRp6g","./operations":"gq2x4","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"jNgGd":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "openActiveWindow", ()=>openActiveWindow
+);
+var _variables = require("./variables");
+var _operations = require("./operations");
+function openActiveWindow(color) {
+    console.log('opening active window for ', color.hex);
+    _variables.activeWindow.querySelector('.active-color').style.backgroundColor = `#${color.hex}`;
+    _variables.activeWindow.querySelector('.label').innerText = `#${color.hex}`;
+    _variables.activeWindow.classList.add('open');
+}
+function closeActiveWindow() {
+    _variables.activeWindow.classList.remove('open');
+}
+document.getElementById('clear').addEventListener('click', closeActiveWindow);
 
 },{"./variables":"aRp6g","./operations":"gq2x4","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"jEMSm":[function(require,module,exports) {
 var _variables = require("./variables");
@@ -740,8 +770,19 @@ async function setInitialState() {
 setInitialState();
 
 },{"./operations":"gq2x4","./pagination":"4h2OG"}],"9yvNQ":[function(require,module,exports) {
+var _variables = require("./variables");
+var _operations = require("./operations");
+function openActiveWindow() {
+    _variables.activeWindow.querySelector('.active-color').style.backgroundColor = `#${color.hex}`;
+    _variables.activeWindow.querySelector('.label').innerText = `#${color.hex}`;
+    _variables.activeWindow.classList.add('open');
+}
+function closeActiveWindow() {
+    _variables.activeWindow.classList.remove('open');
+}
+document.getElementById('clear').addEventListener('click', closeActiveWindow);
 
-},{}],"ingt4":[function(require,module,exports) {
+},{"./operations":"gq2x4","./variables":"aRp6g"}],"ingt4":[function(require,module,exports) {
 var _operations = require("./operations");
 var _pagination = require("./pagination");
 async function handleCategoryClick(e) {
