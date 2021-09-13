@@ -347,16 +347,24 @@
   [hidden] {
     display: none;
   }
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: "Source Serif Pro", serif;
+  color: #363C3C;
+}
 input[type=text] {
   height: 60px;
   width: 320px;
+  font-family: "Helvetica", sans-serif;
+  font-size: 24px;
   box-sizing: border-box;
   padding-left: 21px;
   border-radius: 10px;
 }
-.container {
-  max-width: 1440px;
-  margin: 0 auto;
+input[type=text]::placeholder {
+  opacity: 59.56%;
 }
 button {
   appearance: none;
@@ -374,12 +382,36 @@ button {
   border-radius: 10px;
   cursor: pointer;
 }
-#main {
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.content {
+  display: flex;
+  height: 100%;
+  min-height: calc(100vh - 100px);
+  overflow: hidden;
+}
+.content .right {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  overflow: scroll;
+}
+.content .right #main {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  height: 100%;
+  height: 903px;
   padding: 60px 11px 60px 13px;
+  box-sizing: content-box;
+}
+.generator {
+  display: none;
+}
+.admin .generator {
+  display: block;
 }
 header {
   background-color: #363C3C;
@@ -408,7 +440,6 @@ header .container {
   font-size: 28px;
   line-height: 35px;
   margin-bottom: 18px;
-  cursor: pointer;
 }
 .swatch {
   height: 261px;
@@ -440,9 +471,12 @@ header .container {
 #pagination {
   display: flex;
   justify-content: center;
-  list-style-type: none;
+  flex-wrap: wrap;
+  max-width: 500px;
   margin: 0 auto;
   padding: 0;
+  list-style-type: none;
+  row-gap: 10px;
 }
 #pagination li {
   position: relative;
@@ -472,6 +506,7 @@ header .container {
   left: 0;
   width: 100%;
   height: 100%;
+  min-height: 100%;
   padding: 80px 40px 40px 40px;
   background-color: #ffffff;
 }
@@ -483,8 +518,7 @@ header .container {
   flex-direction: column;
   justify-content: flex-end;
   width: 100%;
-  background: red;
-  min-height: 47.9vw;
+  height: 690px;
   border: 1px solid #363C3C;
   border-radius: 10px;
   overflow: hidden;
@@ -501,6 +535,8 @@ header .container {
   flex-wrap: wrap;
   width: calc(100% + 40px);
   margin-left: -20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 #active-window #fake-tiles .swatch {
   height: 175px;
@@ -512,33 +548,5 @@ header .container {
 #active-window #clear {
   max-width: 260px;
   margin: 0 auto;
-}
-* {
-  box-sizing: border-box;
-}
-body {
-  font-family: "Source Serif Pro", serif;
-  color: #363C3C;
-}
-.content {
-  display: flex;
-  height: 100%;
-  min-height: calc(100vh - 100px);
-}
-.content .right {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  position: relative;
-}
-.content .right #main {
-  width: 100%;
-  min-height: 1023px;
-}
-.generator {
-  display: none;
-}
-.admin .generator {
-  display: block;
 }
 /*# sourceMappingURL=index.fb7d26f7.css.map */
