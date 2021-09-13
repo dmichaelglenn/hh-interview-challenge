@@ -1,9 +1,14 @@
 import { baseColorsUrl, mainWindow, swatchTemplate } from './variables';
+import { generatePagination } from './pagination';
+
+function setActiveCollection(newCollection) {
+    activeCollection = newCollection;
+    generatePagination(activeCollection);
+}
 
 function placeTiles(tiles) {
-
     mainWindow.innerHTML = '';
-    console.log('tiles', tiles);
+
     tiles.forEach(color => {
         const tile = swatchTemplate.content.firstElementChild.cloneNode(true);
         tile.querySelector('.color').style.backgroundColor = color.hex;
@@ -21,14 +26,16 @@ async function getAllColors() {
     return colors;
 }
 
-// async function getAllColors() {
-//     let res = await fetch(baseColorsUrl)
-//     .then(res => res.json())
-//     .then(data )
-//         console.log('thennn', colors);
-//     });
-//     console.log('all colors', colors);
-//     return colors;
-// }
+async function getColorsByCategory(category) {
+    let res = await fetch(baseColorsUrl + `/category/${category}`);
+    let colors = await res.json();
+    return colors;
+}
 
-export { placeTiles, getAllColors }
+async function getRandomColor() {
+    let res = await fetch(baseColorsUrl + '/random');
+    let color = await res.json();
+    return color;
+}
+
+export { setActiveCollection, placeTiles, getAllColors, getColorsByCategory, getRandomColor }
