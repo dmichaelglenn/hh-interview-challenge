@@ -32,6 +32,10 @@ async function getColorsByCategory(category) {
     return colors;
 }
 
+async function getRandomColor() {
+    let res = await fetch(baseColorsUrl + '/random');
+    let color = await res.json();
+    return color;
+}
 
-
-export { setActiveCollection, placeTiles, getAllColors, getColorsByCategory }
+export { setActiveCollection, placeTiles, getAllColors, getColorsByCategory, getRandomColor }

@@ -523,6 +523,8 @@ parcelHelpers.export(exports, "getAllColors", ()=>getAllColors
 );
 parcelHelpers.export(exports, "getColorsByCategory", ()=>getColorsByCategory
 );
+parcelHelpers.export(exports, "getRandomColor", ()=>getRandomColor
+);
 var _variables = require("./variables");
 var _pagination = require("./pagination");
 function setActiveCollection(newCollection) {
@@ -548,6 +550,11 @@ async function getColorsByCategory(category) {
     let res = await fetch(_variables.baseColorsUrl + `/category/${category}`);
     let colors = await res.json();
     return colors;
+}
+async function getRandomColor() {
+    let res = await fetch(_variables.baseColorsUrl + '/random');
+    let color = await res.json();
+    return color;
 }
 
 },{"./variables":"aRp6g","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./pagination":"4h2OG"}],"4h2OG":[function(require,module,exports) {
@@ -613,9 +620,14 @@ async function handleCategoryClick(e) {
     let tiles = _pagination.getPaginatedTiles(activeCollection, 1);
     _operations.placeTiles(tiles);
 }
+async function handleRandomClick(e) {
+    let color = _operations.getRandomColor();
+    console.log(color);
+}
 document.querySelectorAll('.color-category').forEach(function(el) {
     el.addEventListener('click', handleCategoryClick);
 });
+document.getElementById('random').addEventListener('click', handleRandomClick);
 
 },{"./operations":"gq2x4","./pagination":"4h2OG"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
 
