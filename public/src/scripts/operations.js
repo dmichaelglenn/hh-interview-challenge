@@ -7,15 +7,11 @@ function setActiveCollection(newCollection) {
     generatePagination(activeCollection);
 }
 
-function setActiveColor(color) {
-    activeColor = color;    
-}
-
 function placeTiles(tiles) {
     mainWindow.innerHTML = '';
 
     tiles.forEach(color => {
-        const tile = swatchTemplate.content.firstElementChild.cloneNode(true);
+        let tile = swatchTemplate.content.firstElementChild.cloneNode(true);
         tile.querySelector('.color').style.backgroundColor = `#${color.hex}`;
         tile.querySelector('.label').innerText = `#${color.hex}`
         tile.dataset.id = color._id;
@@ -35,11 +31,6 @@ async function getAllColors() {
     return colors;
 }
 
-async function getColorsByCategory(category) {
-    let res = await fetch(baseColorsUrl + `/category/${category}`);
-    let colors = await res.json();
-    return colors;
-}
 
 async function getRandomColor() {
     let res = await fetch(baseColorsUrl + '/random');
@@ -47,14 +38,5 @@ async function getRandomColor() {
     return color;
 }
 
-async function getColorByHex(hex) {
-    if (hex.includes('#')) {
-        console.log('removed a hash');
-        hex = hex.replace('#', '');
-    }
-    let res = await fetch(baseColorsUrl + `/${hex}`);
-    let color = await res.json();
-    return color;
-}
 
-export { setActiveCollection, setActiveColor, placeTiles, getAllColors, getColorsByCategory, getRandomColor, getColorByHex }
+export { setActiveCollection, placeTiles, getAllColors, getRandomColor }

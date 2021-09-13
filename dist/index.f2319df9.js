@@ -524,17 +524,11 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "setActiveCollection", ()=>setActiveCollection
 );
-parcelHelpers.export(exports, "setActiveColor", ()=>setActiveColor
-);
 parcelHelpers.export(exports, "placeTiles", ()=>placeTiles
 );
 parcelHelpers.export(exports, "getAllColors", ()=>getAllColors
 );
-parcelHelpers.export(exports, "getColorsByCategory", ()=>getColorsByCategory
-);
 parcelHelpers.export(exports, "getRandomColor", ()=>getRandomColor
-);
-parcelHelpers.export(exports, "getColorByHex", ()=>getColorByHex
 );
 var _variables = require("./variables");
 var _pagination = require("./pagination");
@@ -543,13 +537,10 @@ function setActiveCollection(newCollection) {
     activeCollection = newCollection;
     _pagination.generatePagination(activeCollection);
 }
-function setActiveColor(color) {
-    activeColor = color;
-}
 function placeTiles(tiles) {
     _variables.mainWindow.innerHTML = '';
     tiles.forEach((color)=>{
-        const tile = _variables.swatchTemplate.content.firstElementChild.cloneNode(true);
+        let tile = _variables.swatchTemplate.content.firstElementChild.cloneNode(true);
         tile.querySelector('.color').style.backgroundColor = `#${color.hex}`;
         tile.querySelector('.label').innerText = `#${color.hex}`;
         tile.dataset.id = color._id;
@@ -565,22 +556,8 @@ async function getAllColors() {
     let colors = await res.json();
     return colors;
 }
-async function getColorsByCategory(category) {
-    let res = await fetch(_variables.baseColorsUrl + `/category/${category}`);
-    let colors = await res.json();
-    return colors;
-}
 async function getRandomColor() {
     let res = await fetch(_variables.baseColorsUrl + '/random');
-    let color = await res.json();
-    return color;
-}
-async function getColorByHex(hex) {
-    if (hex.includes('#')) {
-        console.log('removed a hash');
-        hex = hex.replace('#', '');
-    }
-    let res = await fetch(_variables.baseColorsUrl + `/${hex}`);
     let color = await res.json();
     return color;
 }
@@ -630,7 +607,6 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "openActiveWindow", ()=>openActiveWindow
 );
 var _variables = require("../variables");
-var _operations = require("../operations");
 var _helpers = require("../helpers");
 function generateFakeTile(color) {
     let hex = _helpers.HSLToHex(color.h, color.s, color.l);
@@ -641,36 +617,12 @@ function generateFakeTile(color) {
 }
 function generateAndPlaceFakeTiles(baseColor) {
     _variables.fakeTiles.innerHTML = '';
-    let tileColors = [
-        {
-            h: baseColor.h,
-            s: baseColor.s,
-            l: baseColor.l - 20 > -1 ? baseColor.l - 20 : 0
-        },
-        {
-            h: baseColor.h,
-            s: baseColor.s,
-            l: baseColor.l - 10 > -1 ? baseColor.l - 10 : 0
-        },
-        baseColor,
-        {
-            h: baseColor.h,
-            s: baseColor.s,
-            l: baseColor.l + 10 < 101 ? baseColor.l + 10 : 100
-        },
-        {
-            h: baseColor.h,
-            s: baseColor.s,
-            l: baseColor.l + 20 < 101 ? baseColor.l + 20 : 100
-        }
-    ];
-    tileColors.forEach((color)=>{
-        let tile = generateFakeTile(color);
+    for(i = 0; i < 5; i++){
+        let tile = generateFakeTile(baseColor);
         _variables.fakeTiles.append(tile);
-    });
+    }
 }
 function openActiveWindow(color) {
-    console.log('opening active window for ', color.hex);
     _variables.activeWindow.querySelector('.active-color').style.backgroundColor = `#${color.hex}`;
     _variables.activeWindow.querySelector('.active-label').innerText = `#${color.hex}`;
     generateAndPlaceFakeTiles(color);
@@ -681,7 +633,7 @@ function closeActiveWindow() {
 }
 document.getElementById('clear').addEventListener('click', closeActiveWindow);
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../variables":"aRp6g","../operations":"gq2x4","../helpers":"i1e5p"}],"i1e5p":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../variables":"aRp6g","../helpers":"i1e5p"}],"i1e5p":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "HSLToHex", ()=>HSLToHex
@@ -754,9 +706,8 @@ function generateRandomHSL() {
 var _mainWindow = require("./components/mainWindow");
 var _activeWindow = require("./components/activeWindow");
 var _sidebar = require("./components/sidebar");
-var _colorGenerator = require("./components/colorGenerator");
 
-},{"./components/mainWindow":"iRG7P","./components/activeWindow":"9PCLO","./components/sidebar":"7D917","./components/colorGenerator":"a0c80"}],"iRG7P":[function(require,module,exports) {
+},{"./components/mainWindow":"iRG7P","./components/activeWindow":"9PCLO","./components/sidebar":"7D917"}],"iRG7P":[function(require,module,exports) {
 var _operations = require("../operations");
 var _pagination = require("../pagination");
 async function setInitialState() {
@@ -770,67 +721,12 @@ setInitialState();
 },{"../operations":"gq2x4","../pagination":"4h2OG"}],"7D917":[function(require,module,exports) {
 var _activeWindow = require("./activeWindow");
 var _operations = require("../operations");
-var _pagination = require("../pagination");
-async function handleCategoryClick(e) {
-    let colors = await _operations.getColorsByCategory(e.target.innerText.toLowerCase());
-    _operations.setActiveCollection(colors);
-    let tiles = _pagination.getPaginatedTiles(activeCollection, 1);
-    _operations.placeTiles(tiles);
-}
 async function handleRandomClick(e) {
     let color = await _operations.getRandomColor();
     _activeWindow.openActiveWindow(color);
 }
-document.querySelectorAll('.color-category').forEach(function(el) {
-    console.log(el);
-    el.addEventListener('click', handleCategoryClick);
-});
 document.getElementById('random').addEventListener('click', handleRandomClick);
 
-},{"./activeWindow":"9PCLO","../operations":"gq2x4","../pagination":"4h2OG"}],"a0c80":[function(require,module,exports) {
-var _variables = require("../variables");
-var _helpers = require("../helpers");
-var _operations = require("../operations");
-function generateAndAddRandomColors(count) {
-    for(let i = 0; i < count; i++){
-        let hsl = _helpers.generateRandomHSL();
-        let hex = _helpers.HSLToHex(hsl.h, hsl.s, hsl.l);
-        console.log('random hex', hex);
-        let exists = _operations.getColorByHex(hex);
-        if (exists.length > 0) {
-            console.log('ima skip this 1 chief');
-            i--;
-            continue;
-        }
-        let data = {
-            h: hsl.h,
-            s: hsl.s,
-            l: hsl.l,
-            hex: hex
-        };
-        fetch(_variables.baseColorsUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then((response)=>response.json()
-        ).then((data1)=>{
-            console.log('Success:', data1);
-        }).catch((error)=>{
-            console.error('Error:', error);
-        });
-    }
-}
-function handleGeneratorClick() {
-    let count = document.getElementById('generator-count').value;
-    console.log('going with count', count);
-    generateAndAddRandomColors(count);
-}
-if (document.getElementById('generate-by-count').length > 0) document.getElementById('generate-by-count').addEventListener('click', handleGeneratorClick);
- // export { generateAndAddRandomColors };
- // var randomColor = Math.floor(Math.random()*16777215).toString(16);
-
-},{"../variables":"aRp6g","../helpers":"i1e5p","../operations":"gq2x4"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
+},{"./activeWindow":"9PCLO","../operations":"gq2x4"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
 
 //# sourceMappingURL=index.f2319df9.js.map

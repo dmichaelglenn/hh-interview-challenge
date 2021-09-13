@@ -414,6 +414,7 @@ header .container {
   height: 261px;
   padding: 20px 27px;
   box-sizing: content-box;
+  cursor: pointer;
 }
 .swatch .inner {
   display: flex;
@@ -464,6 +465,8 @@ header .container {
   background: #363C3C;
 }
 #active-window {
+  display: none;
+  flex-direction: column;
   position: absolute;
   top: 0;
   left: 0;
@@ -471,13 +474,9 @@ header .container {
   height: 100%;
   padding: 80px 40px 40px 40px;
   background-color: #ffffff;
-  opacity: 0;
-  transition: all 300ms ease-in-out;
-  pointer-events: none;
 }
 #active-window.open {
-  opacity: 1;
-  pointer-events: auto;
+  display: flex;
 }
 #active-window .active-color {
   display: flex;
@@ -509,6 +508,10 @@ header .container {
 }
 #active-window #fake-tiles .swatch .inner {
   width: 175px;
+}
+#active-window #clear {
+  max-width: 260px;
+  margin: 0 auto;
 }
 * {
   box-sizing: border-box;

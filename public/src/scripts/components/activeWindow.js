@@ -1,5 +1,4 @@
 import { activeWindow, fakeTiles, swatchTemplate } from '../variables';
-import { setActiveColor } from '../operations';
 import { HSLToHex } from '../helpers';
 
 function generateFakeTile(color) {
@@ -13,39 +12,14 @@ function generateFakeTile(color) {
 function generateAndPlaceFakeTiles(baseColor) {
     fakeTiles.innerHTML = '';
 
-    let tileColors = [
-        {
-            h: baseColor.h,
-            s: baseColor.s,
-            l: ((baseColor.l - 20) > -1 ? baseColor.l - 20 : 0)
-        },
-        {
-            h: baseColor.h,
-            s: baseColor.s,
-            l: ((baseColor.l - 10) > -1 ? baseColor.l - 10 : 0)
-        },
-        baseColor,
-        {
-            h: baseColor.h,
-            s: baseColor.s,
-            l: ((baseColor.l + 10) < 101 ? baseColor.l + 10 : 100)
-        },
-        {
-            h: baseColor.h,
-            s: baseColor.s,
-            l: ((baseColor.l + 20) < 101 ? baseColor.l + 20 : 100)
-        }
-    ]
-    
-    tileColors.forEach(color => {
-        let tile = generateFakeTile(color);
+    for (i = 0; i < 5; i++) {
+        let tile = generateFakeTile(baseColor);
         fakeTiles.append(tile);
-    });
+    }
 
 }
 
 function openActiveWindow(color) {
-    console.log('opening active window for ', color.hex)
     activeWindow.querySelector('.active-color').style.backgroundColor = `#${color.hex}`;
     activeWindow.querySelector('.active-label').innerText = `#${color.hex}`;
     generateAndPlaceFakeTiles(color);
