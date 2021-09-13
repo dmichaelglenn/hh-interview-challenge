@@ -457,11 +457,13 @@ function hmrAcceptRun(bundle, id) {
 },{}],"8fVck":[function(require,module,exports) {
 var _variables = require("./src/scripts/variables");
 var _operations = require("./src/scripts/operations");
+var _colorGenerator = require("./src/scripts/colorGenerator");
 var _components = require("./src/scripts/components");
-console.log('here!', _variables.baseColorsUrl);
-console.log(_operations.getAllColors());
+const urlParams = new URLSearchParams(window.location.search);
+const adminStatus = urlParams.get('admin');
+if (adminStatus === 'yes') document.querySelector('body').classList.add('admin');
 
-},{"./src/scripts/variables":"aRp6g","./src/scripts/operations":"gq2x4","./src/scripts/components":"7u8Xe"}],"aRp6g":[function(require,module,exports) {
+},{"./src/scripts/variables":"aRp6g","./src/scripts/operations":"gq2x4","./src/scripts/components":"7u8Xe","./src/scripts/colorGenerator":"jEMSm"}],"aRp6g":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "baseColorsUrl", ()=>baseColorsUrl
@@ -525,6 +527,8 @@ parcelHelpers.export(exports, "getColorsByCategory", ()=>getColorsByCategory
 );
 parcelHelpers.export(exports, "getRandomColor", ()=>getRandomColor
 );
+parcelHelpers.export(exports, "getColorByHex", ()=>getColorByHex
+);
 var _variables = require("./variables");
 var _pagination = require("./pagination");
 function setActiveCollection(newCollection) {
@@ -535,7 +539,8 @@ function placeTiles(tiles) {
     _variables.mainWindow.innerHTML = '';
     tiles.forEach((color)=>{
         const tile = _variables.swatchTemplate.content.firstElementChild.cloneNode(true);
-        tile.querySelector('.color').style.backgroundColor = color.hex;
+        tile.querySelector('.color').style.backgroundColor = `#${color.hex}`;
+        tile.querySelector('.label').innerText = `#${color.hex}`;
         tile.dataset.id = color._id;
         tile.dataset.hex = color.hex;
         _variables.mainWindow.append(tile);
@@ -553,6 +558,15 @@ async function getColorsByCategory(category) {
 }
 async function getRandomColor() {
     let res = await fetch(_variables.baseColorsUrl + '/random');
+    let color = await res.json();
+    return color;
+}
+async function getColorByHex(hex) {
+    if (hex.includes('#')) {
+        console.log('removed a hash');
+        hex = hex.replace('#', '');
+    }
+    let res = await fetch(_variables.baseColorsUrl + `/${hex}`);
     let color = await res.json();
     return color;
 }
@@ -598,9 +612,10 @@ function generatePagination(activeCollection) {
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./variables":"aRp6g","./operations":"gq2x4"}],"7u8Xe":[function(require,module,exports) {
 var _mainWindow = require("./mainWindow");
+var _activeWindow = require("./activeWindow");
 var _sidebar = require("./sidebar");
 
-},{"./mainWindow":"ktYJj","./sidebar":"ingt4"}],"ktYJj":[function(require,module,exports) {
+},{"./mainWindow":"ktYJj","./sidebar":"ingt4","./activeWindow":"9yvNQ"}],"ktYJj":[function(require,module,exports) {
 var _operations = require("./operations");
 var _pagination = require("./pagination");
 async function setInitialState() {
@@ -629,6 +644,120 @@ document.querySelectorAll('.color-category').forEach(function(el) {
 });
 document.getElementById('random').addEventListener('click', handleRandomClick);
 
-},{"./operations":"gq2x4","./pagination":"4h2OG"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
+},{"./operations":"gq2x4","./pagination":"4h2OG"}],"9yvNQ":[function(require,module,exports) {
+
+},{}],"jEMSm":[function(require,module,exports) {
+var _variables = require("./variables");
+var _helpers = require("./helpers");
+var _operations = require("./operations");
+function generateAndAddRandomColors(count) {
+    for(let i = 0; i < count; i++){
+        let hsl = _helpers.generateRandomHSL();
+        let hex = _helpers.HSLToHex(hsl.h, hsl.s, hsl.l);
+        console.log('random hex', hex);
+        let exists = _operations.getColorByHex(hex);
+        if (exists.length > 0) {
+            console.log('ima skip this 1 chief');
+            i--;
+            continue;
+        }
+        let data = {
+            h: hsl.h,
+            s: hsl.s,
+            l: hsl.l,
+            hex: hex
+        };
+        fetch(_variables.baseColorsUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then((response)=>response.json()
+        ).then((data1)=>{
+            console.log('Success:', data1);
+        }).catch((error)=>{
+            console.error('Error:', error);
+        });
+    }
+}
+function handleGeneratorClick() {
+    let count = document.getElementById('generator-count').value;
+    console.log('going with count', count);
+    generateAndAddRandomColors(count);
+}
+document.getElementById('generate-by-count').addEventListener('click', handleGeneratorClick); // export { generateAndAddRandomColors };
+ // var randomColor = Math.floor(Math.random()*16777215).toString(16);
+
+},{"./operations":"gq2x4","./variables":"aRp6g","./helpers":"i1e5p"}],"i1e5p":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "HSLToHex", ()=>HSLToHex
+);
+parcelHelpers.export(exports, "hexToHSL", ()=>hexToHSL
+);
+parcelHelpers.export(exports, "generateRandomHexColor", ()=>generateRandomHexColor
+);
+parcelHelpers.export(exports, "generateRandomHSL", ()=>generateRandomHSL
+);
+function HSLToHex(h, s, l) {
+    l /= 100;
+    const a = s * Math.min(l, 1 - l) / 100;
+    const f = (n)=>{
+        const k = (n + h / 30) % 12;
+        const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+        return Math.round(255 * color).toString(16).padStart(2, '0'); // convert to Hex and prefix "0" if needed
+    };
+    return `${f(0)}${f(8)}${f(4)}`;
+}
+//shamelessly 'borrowed' this function from github. I'm not a plagerizer
+function hexToHSL(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    r = parseInt(result[1], 16);
+    g = parseInt(result[2], 16);
+    b = parseInt(result[3], 16);
+    r /= 255, g /= 255, b /= 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+    if (max == min) h = s = 0; // achromatic
+    else {
+        var d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch(max){
+            case r:
+                h = (g - b) / d + (g < b ? 6 : 0);
+                break;
+            case g:
+                h = (b - r) / d + 2;
+                break;
+            case b:
+                h = (r - g) / d + 4;
+                break;
+        }
+        h /= 6;
+    }
+    var HSL = new Object();
+    HSL['h'] = h;
+    HSL['s'] = s;
+    HSL['l'] = l;
+    return HSL;
+}
+function generateRandomHexColor() {
+    //also a stack overflow special just fyi
+    let n = (Math.random() * 1048575000000).toString(16);
+    return n.slice(0, 6);
+}
+function generateRandomHSL() {
+    var h = Math.floor(Math.random() * 361);
+    var s = Math.floor(Math.random() * 101);
+    var l = Math.floor(Math.random() * 101);
+    return {
+        h: h,
+        s: s,
+        l: l
+    };
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
 
 //# sourceMappingURL=index.f2319df9.js.map

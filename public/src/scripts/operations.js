@@ -11,7 +11,8 @@ function placeTiles(tiles) {
 
     tiles.forEach(color => {
         const tile = swatchTemplate.content.firstElementChild.cloneNode(true);
-        tile.querySelector('.color').style.backgroundColor = color.hex;
+        tile.querySelector('.color').style.backgroundColor = `#${color.hex}`;
+        tile.querySelector('.label').innerText = `#${color.hex}`
         tile.dataset.id = color._id;
         tile.dataset.hex = color.hex;
 
@@ -38,4 +39,14 @@ async function getRandomColor() {
     return color;
 }
 
-export { setActiveCollection, placeTiles, getAllColors, getColorsByCategory, getRandomColor }
+async function getColorByHex(hex) {
+    if (hex.includes('#')) {
+        console.log('removed a hash');
+        hex = hex.replace('#', '');
+    }
+    let res = await fetch(baseColorsUrl + `/${hex}`);
+    let color = await res.json();
+    return color;
+}
+
+export { setActiveCollection, placeTiles, getAllColors, getColorsByCategory, getRandomColor, getColorByHex }

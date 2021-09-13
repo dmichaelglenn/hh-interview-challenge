@@ -34,10 +34,23 @@
                 <li class="color-category">Brown</li>
                 <li class="color-category">Gray</li>
             </ul>
+            <div class="generator">
+                <input type="number" id="generator-count" />
+                <button id="generate-by-count">Generate!</button>
+            </div>
         </div>
         <div class="right">
             <div id="main"></div>
             <ul id="pagination"></ul>
+            <div id="active-window">
+                <div class="active-color">
+                    <div class="color"></div>
+                    <div class="label"></div>
+                </div>
+                <div id="fake-swatches">
+
+                </div>
+            </div>
         </div>
     </div>
     <template id="swatch-template">

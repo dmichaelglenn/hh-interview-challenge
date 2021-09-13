@@ -223,6 +223,13 @@ app.get("/colors/category/:category", function (req, res) {
     let query = resolveColorQuery(req.params.category);
     getResourcesByQuery(Color, query)(req, res);
 });
+app.get("/colors/:hex", function (req, res) {
+    let hex = '#' + req.params.hex;
+    let query = {
+        hex: hex
+    };
+    getResourcesByQuery(Color, query)(req, res);
+});
 app.post("/colors", createResource(Color));
 
 const server = app.listen(port, function () {

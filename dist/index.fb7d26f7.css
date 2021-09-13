@@ -484,4 +484,10 @@ body {
   width: 100%;
   min-height: 1023px;
 }
+.generator {
+  display: none;
+}
+.admin .generator {
+  display: block;
+}
 /*# sourceMappingURL=index.fb7d26f7.css.map */

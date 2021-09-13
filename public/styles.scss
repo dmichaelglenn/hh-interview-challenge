@@ -27,3 +27,11 @@ body {
         }
     }
 }
+
+.generator {
+    display: none;
+}
+
+.admin .generator {
+    display: block;
+}
