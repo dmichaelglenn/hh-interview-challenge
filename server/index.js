@@ -207,7 +207,11 @@ function resolveColorQuery(category) {
                 }
             }
             break;
-        default: query = {};
+        default: query = {
+            l: {
+                $gte: 101
+            }
+        };
     }
     return query;
 }

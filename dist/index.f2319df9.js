@@ -515,23 +515,22 @@ exports.export = function(dest, destName, get) {
 },{}],"gq2x4":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-// async function getAllColors() {
-//     let res = await fetch(baseColorsUrl)
-//     .then(res => res.json())
-//     .then(data )
-//         console.log('thennn', colors);
-//     });
-//     console.log('all colors', colors);
-//     return colors;
-// }
+parcelHelpers.export(exports, "setActiveCollection", ()=>setActiveCollection
+);
 parcelHelpers.export(exports, "placeTiles", ()=>placeTiles
 );
 parcelHelpers.export(exports, "getAllColors", ()=>getAllColors
 );
+parcelHelpers.export(exports, "getColorsByCategory", ()=>getColorsByCategory
+);
 var _variables = require("./variables");
+var _pagination = require("./pagination");
+function setActiveCollection(newCollection) {
+    activeCollection = newCollection;
+    _pagination.generatePagination(activeCollection);
+}
 function placeTiles(tiles) {
     _variables.mainWindow.innerHTML = '';
-    console.log('tiles', tiles);
     tiles.forEach((color)=>{
         const tile = _variables.swatchTemplate.content.firstElementChild.cloneNode(true);
         tile.querySelector('.color').style.backgroundColor = color.hex;
@@ -545,34 +544,13 @@ async function getAllColors() {
     let colors = await res.json();
     return colors;
 }
-
-},{"./variables":"aRp6g","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"7u8Xe":[function(require,module,exports) {
-var _mainWindow = require("./mainWindow");
-
-},{"./mainWindow":"ktYJj"}],"ktYJj":[function(require,module,exports) {
-var _operations = require("./operations");
-var _pagination = require("./pagination");
-var _variables = require("./variables");
-console.log('mainwindow js');
-function setActiveCollection(newCollection) {
-    activeCollection = newCollection;
-    console.log(activeCollection);
+async function getColorsByCategory(category) {
+    let res = await fetch(_variables.baseColorsUrl + `/category/${category}`);
+    let colors = await res.json();
+    return colors;
 }
-async function initialState() {
-    const colors = await _operations.getAllColors();
-    setActiveCollection(colors);
-    _pagination.generatePagination(activeCollection);
-    const tiles = _pagination.getPaginatedTiles(activeCollection, 1);
-    console.log(tiles);
-    _operations.placeTiles(tiles);
-    console.log('initial', colors);
-// setActiveCollection(colors);
-// placeTiles(activeCollection);
-}
-initialState(); // setActiveCollection(getAllColors());
- // placeTiles(activeCollection);
 
-},{"./operations":"gq2x4","./variables":"aRp6g","./pagination":"4h2OG"}],"4h2OG":[function(require,module,exports) {
+},{"./variables":"aRp6g","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./pagination":"4h2OG"}],"4h2OG":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getPaginatedTiles", ()=>getPaginatedTiles
@@ -611,6 +589,34 @@ function generatePagination(activeCollection) {
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./variables":"aRp6g","./operations":"gq2x4"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./variables":"aRp6g","./operations":"gq2x4"}],"7u8Xe":[function(require,module,exports) {
+var _mainWindow = require("./mainWindow");
+var _sidebar = require("./sidebar");
+
+},{"./mainWindow":"ktYJj","./sidebar":"ingt4"}],"ktYJj":[function(require,module,exports) {
+var _operations = require("./operations");
+var _pagination = require("./pagination");
+async function setInitialState() {
+    let colors = await _operations.getAllColors();
+    _operations.setActiveCollection(colors);
+    let tiles = _pagination.getPaginatedTiles(activeCollection, 1);
+    _operations.placeTiles(tiles);
+}
+setInitialState();
+
+},{"./operations":"gq2x4","./pagination":"4h2OG"}],"ingt4":[function(require,module,exports) {
+var _operations = require("./operations");
+var _pagination = require("./pagination");
+async function handleCategoryClick(e) {
+    let colors = await _operations.getColorsByCategory(e.target.innerText.toLowerCase());
+    _operations.setActiveCollection(colors);
+    let tiles = _pagination.getPaginatedTiles(activeCollection, 1);
+    _operations.placeTiles(tiles);
+}
+document.querySelectorAll('.color-category').forEach(function(el) {
+    el.addEventListener('click', handleCategoryClick);
+});
+
+},{"./operations":"gq2x4","./pagination":"4h2OG"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
 
 //# sourceMappingURL=index.f2319df9.js.map
