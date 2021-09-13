@@ -411,17 +411,20 @@ header .container {
   cursor: pointer;
 }
 .swatch {
+  height: 261px;
   padding: 20px 27px;
+  box-sizing: content-box;
 }
 .swatch .inner {
   display: flex;
   flex-direction: column;
   width: 220px;
-  height: 261px;
+  height: 100%;
   overflow: hidden;
   border: 1px solid #FDFDFD;
   border-radius: 10px;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
 }
 .swatch .inner .color {
   height: calc(100% - 50px);
@@ -432,6 +435,33 @@ header .container {
   padding: 17px 24px 0;
   font-size: 24px;
   line-height: 30px;
+}
+#pagination {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  margin: 0 auto;
+  padding: 0;
+}
+#pagination li {
+  position: relative;
+  margin: 0 14px;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+#pagination li.active {
+  font-weight: bold;
+}
+#pagination li.active:after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 2px;
+  background: #363C3C;
 }
 * {
   box-sizing: border-box;
@@ -444,5 +474,14 @@ body {
   display: flex;
   height: 100%;
   min-height: calc(100vh - 100px);
+}
+.content .right {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.content .right #main {
+  width: 100%;
+  min-height: 1023px;
 }
 /*# sourceMappingURL=index.fb7d26f7.css.map */

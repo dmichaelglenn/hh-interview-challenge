@@ -582,26 +582,25 @@ parcelHelpers.export(exports, "generatePagination", ()=>generatePagination
 var _variables = require("./variables");
 var _operations = require("./operations");
 function getPaginatedTiles(activeCollection, page) {
-    const max = _variables.perPageCount * page;
-    const min = max - _variables.perPageCount;
+    let max = _variables.perPageCount * page;
+    let min = max - _variables.perPageCount;
     let tiles = [];
     for(var i = min; i < max; i++){
         if (i > activeCollection.length - 1) break;
         tiles.push(activeCollection[i]);
     }
-    console.log('min', min, 'max', max);
     return tiles;
 }
 function handlePaginationClick(e) {
-    const page = e.target.dataset.page;
-    const tiles = getPaginatedTiles(activeCollection, page);
-    _operations.placeTiles(tiles);
+    let page = e.target.dataset.page;
+    let tiles = getPaginatedTiles(activeCollection, page);
     _variables.paginationWrap.querySelector('.active').classList.remove('active');
     e.target.classList.add('active');
+    _operations.placeTiles(tiles);
 }
 function generatePagination(activeCollection) {
-    _variables.paginationWrap.innerHTML = '';
     let pageCount = Math.ceil(activeCollection.length / _variables.perPageCount);
+    _variables.paginationWrap.innerHTML = '';
     for(i = 0; i < pageCount; i++){
         let el = document.createElement('li');
         el.innerText = i + 1;
@@ -610,7 +609,6 @@ function generatePagination(activeCollection) {
         if (i === 0) el.classList.add('active');
         _variables.paginationWrap.append(el);
     }
-    console.log('page count', pageCount);
 }
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./variables":"aRp6g","./operations":"gq2x4"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")

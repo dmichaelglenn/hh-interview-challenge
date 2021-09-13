@@ -2,8 +2,8 @@ import { perPageCount, paginationWrap } from './variables';
 import { placeTiles } from './operations';
 
 function getPaginatedTiles(activeCollection, page) {
-    const max = perPageCount * page;
-    const min = max - perPageCount;
+    let max = perPageCount * page;
+    let min = max - perPageCount;
     let tiles = [];
 
     for (var i = min; i < max; i++) {
@@ -12,24 +12,24 @@ function getPaginatedTiles(activeCollection, page) {
         } 
         tiles.push(activeCollection[i]);
     }
-    console.log('min', min, 'max', max);
-
+    
     return tiles;
 }
 
 function handlePaginationClick(e) {
-    const page = e.target.dataset.page;
-    const tiles = getPaginatedTiles(activeCollection, page);
-
-    placeTiles(tiles);
+    let page = e.target.dataset.page;
+    let tiles = getPaginatedTiles(activeCollection, page);
 
     paginationWrap.querySelector('.active').classList.remove('active');
     e.target.classList.add('active');
+
+    placeTiles(tiles);
 }
 
 function generatePagination(activeCollection) {
-    paginationWrap.innerHTML = '';
     let pageCount = Math.ceil(activeCollection.length / perPageCount);
+
+    paginationWrap.innerHTML = '';
 
     for (i = 0; i < pageCount; i++) {
         let el = document.createElement('li');
@@ -39,7 +39,6 @@ function generatePagination(activeCollection) {
         if (i === 0) el.classList.add('active');
         paginationWrap.append(el);
     }
-    console.log('page count', pageCount);
 }
 
 export { getPaginatedTiles, generatePagination }
