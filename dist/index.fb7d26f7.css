@@ -490,12 +490,25 @@ header .container {
   border-radius: 10px;
   overflow: hidden;
 }
-#active-window .label {
+#active-window .active-label {
   height: 135px;
   padding: 42px 40px 36px;
   background-color: #ffffff;
   font-size: 48px;
   font-weight: normal;
+}
+#active-window #fake-tiles {
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(100% + 40px);
+  margin-left: -20px;
+}
+#active-window #fake-tiles .swatch {
+  height: 175px;
+  padding: 20px;
+}
+#active-window #fake-tiles .swatch .inner {
+  width: 175px;
 }
 * {
   box-sizing: border-box;

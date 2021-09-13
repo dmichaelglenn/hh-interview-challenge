@@ -1,4 +1,5 @@
-import { setActiveCollection, getColorsByCategory, getRandomColor, placeTiles } from "./operations";
+import { openActiveWindow } from "./activeWindow";
+import { setActiveCollection, setActiveColor, getColorsByCategory, getRandomColor, placeTiles } from "./operations";
 import { getPaginatedTiles } from "./pagination";
 
 async function handleCategoryClick(e) {
@@ -10,8 +11,8 @@ async function handleCategoryClick(e) {
 }
 
 async function handleRandomClick(e) {
-    let color = getRandomColor();
-    console.log(color);
+    let color = await getRandomColor();
+    openActiveWindow(color);
 }
 
 document.querySelectorAll('.color-category').forEach(function(el) {

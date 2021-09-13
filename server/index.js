@@ -46,11 +46,6 @@ function getRandomResource(Model) {
     }
 }
 
-const testGrayQuery = {
-    s: {
-        $lte: 6
-    }
-}
 
 function getResourcesByQuery(Model, query) {
     return function (req, res, next) {

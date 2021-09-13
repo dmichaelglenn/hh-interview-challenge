@@ -30,11 +30,28 @@
         overflow: hidden;
     }
 
-    .label {
+    .active-label {
         height: 135px;
         padding: 42px 40px 36px;
         background-color: $white-pure;
         font-size: 48px;
         font-weight: normal;
+    }
+
+    #fake-tiles {
+        display: flex;
+        flex-wrap: wrap;
+        width: calc(100% + 40px);
+        margin-left: -20px;
+
+        .swatch {
+            height: 175px;
+            padding: 20px;
+
+            
+            .inner {
+                width: 175px;
+            }
+        }
     }
 }

@@ -474,6 +474,8 @@ parcelHelpers.export(exports, "mainWindow", ()=>mainWindow
 );
 parcelHelpers.export(exports, "activeWindow", ()=>activeWindow
 );
+parcelHelpers.export(exports, "fakeTiles", ()=>fakeTiles
+);
 parcelHelpers.export(exports, "paginationWrap", ()=>paginationWrap
 );
 parcelHelpers.export(exports, "swatchTemplate", ()=>swatchTemplate
@@ -482,6 +484,7 @@ const baseColorsUrl = 'http://localhost:8080/colors';
 const perPageCount = 12;
 const mainWindow = document.getElementById('main');
 const activeWindow = document.getElementById('active-window');
+const fakeTiles = document.getElementById('fake-tiles');
 const paginationWrap = document.getElementById('pagination');
 const swatchTemplate = document.getElementById("swatch-template");
 
@@ -629,10 +632,49 @@ parcelHelpers.export(exports, "openActiveWindow", ()=>openActiveWindow
 );
 var _variables = require("./variables");
 var _operations = require("./operations");
+var _helpers = require("./helpers");
+function generateFakeTile(color) {
+    let hex = _helpers.HSLToHex(color.h, color.s, color.l);
+    let tile = _variables.swatchTemplate.content.firstElementChild.cloneNode(true);
+    tile.querySelector('.color').style.backgroundColor = `#${hex}`;
+    tile.querySelector('.label').innerText = `#${hex}`;
+    return tile;
+}
+function generateAndPlaceFakeTiles(baseColor) {
+    _variables.fakeTiles.innerHTML = '';
+    let tileColors = [
+        {
+            h: baseColor.h,
+            s: baseColor.s,
+            l: baseColor.l - 20 > -1 ? baseColor.l - 20 : 0
+        },
+        {
+            h: baseColor.h,
+            s: baseColor.s,
+            l: baseColor.l - 10 > -1 ? baseColor.l - 10 : 0
+        },
+        baseColor,
+        {
+            h: baseColor.h,
+            s: baseColor.s,
+            l: baseColor.l + 10 < 101 ? baseColor.l + 10 : 100
+        },
+        {
+            h: baseColor.h,
+            s: baseColor.s,
+            l: baseColor.l + 20 < 101 ? baseColor.l + 20 : 100
+        }
+    ];
+    tileColors.forEach((color)=>{
+        let tile = generateFakeTile(color);
+        _variables.fakeTiles.append(tile);
+    });
+}
 function openActiveWindow(color) {
     console.log('opening active window for ', color.hex);
     _variables.activeWindow.querySelector('.active-color').style.backgroundColor = `#${color.hex}`;
-    _variables.activeWindow.querySelector('.label').innerText = `#${color.hex}`;
+    _variables.activeWindow.querySelector('.active-label').innerText = `#${color.hex}`;
+    generateAndPlaceFakeTiles(color);
     _variables.activeWindow.classList.add('open');
 }
 function closeActiveWindow() {
@@ -640,51 +682,7 @@ function closeActiveWindow() {
 }
 document.getElementById('clear').addEventListener('click', closeActiveWindow);
 
-},{"./variables":"aRp6g","./operations":"gq2x4","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"jEMSm":[function(require,module,exports) {
-var _variables = require("./variables");
-var _helpers = require("./helpers");
-var _operations = require("./operations");
-function generateAndAddRandomColors(count) {
-    for(let i = 0; i < count; i++){
-        let hsl = _helpers.generateRandomHSL();
-        let hex = _helpers.HSLToHex(hsl.h, hsl.s, hsl.l);
-        console.log('random hex', hex);
-        let exists = _operations.getColorByHex(hex);
-        if (exists.length > 0) {
-            console.log('ima skip this 1 chief');
-            i--;
-            continue;
-        }
-        let data = {
-            h: hsl.h,
-            s: hsl.s,
-            l: hsl.l,
-            hex: hex
-        };
-        fetch(_variables.baseColorsUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then((response)=>response.json()
-        ).then((data1)=>{
-            console.log('Success:', data1);
-        }).catch((error)=>{
-            console.error('Error:', error);
-        });
-    }
-}
-function handleGeneratorClick() {
-    let count = document.getElementById('generator-count').value;
-    console.log('going with count', count);
-    generateAndAddRandomColors(count);
-}
-if (document.getElementById('generate-by-count').length > 0) document.getElementById('generate-by-count').addEventListener('click', handleGeneratorClick);
- // export { generateAndAddRandomColors };
- // var randomColor = Math.floor(Math.random()*16777215).toString(16);
-
-},{"./variables":"aRp6g","./helpers":"i1e5p","./operations":"gq2x4"}],"i1e5p":[function(require,module,exports) {
+},{"./variables":"aRp6g","./operations":"gq2x4","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./helpers":"i1e5p"}],"i1e5p":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "HSLToHex", ()=>HSLToHex
@@ -753,12 +751,56 @@ function generateRandomHSL() {
     };
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"7u8Xe":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"jEMSm":[function(require,module,exports) {
+var _variables = require("./variables");
+var _helpers = require("./helpers");
+var _operations = require("./operations");
+function generateAndAddRandomColors(count) {
+    for(let i = 0; i < count; i++){
+        let hsl = _helpers.generateRandomHSL();
+        let hex = _helpers.HSLToHex(hsl.h, hsl.s, hsl.l);
+        console.log('random hex', hex);
+        let exists = _operations.getColorByHex(hex);
+        if (exists.length > 0) {
+            console.log('ima skip this 1 chief');
+            i--;
+            continue;
+        }
+        let data = {
+            h: hsl.h,
+            s: hsl.s,
+            l: hsl.l,
+            hex: hex
+        };
+        fetch(_variables.baseColorsUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then((response)=>response.json()
+        ).then((data1)=>{
+            console.log('Success:', data1);
+        }).catch((error)=>{
+            console.error('Error:', error);
+        });
+    }
+}
+function handleGeneratorClick() {
+    let count = document.getElementById('generator-count').value;
+    console.log('going with count', count);
+    generateAndAddRandomColors(count);
+}
+if (document.getElementById('generate-by-count').length > 0) document.getElementById('generate-by-count').addEventListener('click', handleGeneratorClick);
+ // export { generateAndAddRandomColors };
+ // var randomColor = Math.floor(Math.random()*16777215).toString(16);
+
+},{"./variables":"aRp6g","./helpers":"i1e5p","./operations":"gq2x4"}],"7u8Xe":[function(require,module,exports) {
 var _mainWindow = require("./mainWindow");
 var _activeWindow = require("./activeWindow");
 var _sidebar = require("./sidebar");
 
-},{"./mainWindow":"ktYJj","./activeWindow":"9yvNQ","./sidebar":"ingt4"}],"ktYJj":[function(require,module,exports) {
+},{"./mainWindow":"ktYJj","./sidebar":"ingt4","./activeWindow":"jNgGd"}],"ktYJj":[function(require,module,exports) {
 var _operations = require("./operations");
 var _pagination = require("./pagination");
 async function setInitialState() {
@@ -769,20 +811,8 @@ async function setInitialState() {
 }
 setInitialState();
 
-},{"./operations":"gq2x4","./pagination":"4h2OG"}],"9yvNQ":[function(require,module,exports) {
-var _variables = require("./variables");
-var _operations = require("./operations");
-function openActiveWindow() {
-    _variables.activeWindow.querySelector('.active-color').style.backgroundColor = `#${color.hex}`;
-    _variables.activeWindow.querySelector('.label').innerText = `#${color.hex}`;
-    _variables.activeWindow.classList.add('open');
-}
-function closeActiveWindow() {
-    _variables.activeWindow.classList.remove('open');
-}
-document.getElementById('clear').addEventListener('click', closeActiveWindow);
-
-},{"./operations":"gq2x4","./variables":"aRp6g"}],"ingt4":[function(require,module,exports) {
+},{"./operations":"gq2x4","./pagination":"4h2OG"}],"ingt4":[function(require,module,exports) {
+var _activeWindow = require("./activeWindow");
 var _operations = require("./operations");
 var _pagination = require("./pagination");
 async function handleCategoryClick(e) {
@@ -792,8 +822,8 @@ async function handleCategoryClick(e) {
     _operations.placeTiles(tiles);
 }
 async function handleRandomClick(e) {
-    let color = _operations.getRandomColor();
-    console.log(color);
+    let color = await _operations.getRandomColor();
+    _activeWindow.openActiveWindow(color);
 }
 document.querySelectorAll('.color-category').forEach(function(el) {
     console.log(el);
@@ -801,6 +831,6 @@ document.querySelectorAll('.color-category').forEach(function(el) {
 });
 document.getElementById('random').addEventListener('click', handleRandomClick);
 
-},{"./operations":"gq2x4","./pagination":"4h2OG"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
+},{"./operations":"gq2x4","./pagination":"4h2OG","./activeWindow":"jNgGd"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
 
 //# sourceMappingURL=index.f2319df9.js.map
