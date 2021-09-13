@@ -19,7 +19,7 @@ const Color = mongoose.model("Color", ColorSchema);
 
 const app = express();
 
-app.use(express.static(__dirname + "/../public"));
+app.use(express.static(__dirname + "/../dist"));
 app.use(express.static(__dirname + "/../admin"));
 app.use(bodyParser.json());
 app.use(cors());

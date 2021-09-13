@@ -2,10 +2,6 @@ import { baseColorsUrl, mainWindow, swatchTemplate } from './variables';
 import { generatePagination } from './pagination';
 import { openActiveWindow } from './components/activeWindow';
 
-function setActiveCollection(newCollection) {
-    activeCollection = newCollection;
-    generatePagination(activeCollection);
-}
 
 function placeTiles(tiles) {
     mainWindow.innerHTML = '';
@@ -39,4 +35,4 @@ async function getRandomColor() {
 }
 
 
-export { setActiveCollection, placeTiles, getAllColors, getRandomColor }
+export { placeTiles, getAllColors, getRandomColor }

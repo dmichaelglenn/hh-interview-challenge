@@ -1,4 +1,6 @@
-import './src/scripts/components';
+let activeCollection = {};
+
+import './scripts/components';
 
 document.querySelector('.logo').href = window.location.href;
 
