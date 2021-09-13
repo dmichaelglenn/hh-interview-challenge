@@ -456,9 +456,6 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"8fVck":[function(require,module,exports) {
 var _components = require("./src/scripts/components");
-const urlParams = new URLSearchParams(window.location.search);
-const adminStatus = urlParams.get('admin');
-if (adminStatus === 'yes') document.querySelector('body').classList.add('admin');
 document.querySelector('.logo').href = window.location.href;
 
 },{"./src/scripts/components":"7u8Xe"}],"7u8Xe":[function(require,module,exports) {
