@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 const express = require("express");
-const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require('cors');
 const port = process.env.PORT || 8081;
@@ -21,7 +20,7 @@ const app = express();
 
 app.use(express.static(__dirname + "/../dist"));
 app.use(express.static(__dirname + "/../admin"));
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
 
 function listResources(Model) {
