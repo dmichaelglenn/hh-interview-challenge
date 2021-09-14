@@ -1,4 +1,6 @@
 #sidebar {
+    position: relative;
+    z-index: 6;
     flex: 0 0 auto;
     min-height: 100%;
     width: 320px;
