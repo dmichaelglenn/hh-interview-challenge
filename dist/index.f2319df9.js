@@ -479,7 +479,7 @@ parcelHelpers.export(exports, "paginationWrap", ()=>paginationWrap
 );
 parcelHelpers.export(exports, "swatchTemplate", ()=>swatchTemplate
 );
-const baseColorsUrl = 'http://localhost:8080/colors';
+const baseColorsUrl = '/colors';
 const perPageCount = 12;
 const mainWindow = document.getElementById('main');
 const activeWindow = document.getElementById('active-window');
@@ -681,7 +681,7 @@ function closeActiveWindow() {
 }
 document.getElementById('clear').addEventListener('click', closeActiveWindow);
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../variables":"aRp6g","../operations":"gq2x4","../helpers":"i1e5p"}],"i1e5p":[function(require,module,exports) {
+},{"../variables":"aRp6g","../operations":"gq2x4","../helpers":"i1e5p","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"i1e5p":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "HSLToHex", ()=>HSLToHex

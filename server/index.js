@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 const express = require("express");
-const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require('cors');
 const port = process.env.PORT || 8081;
@@ -21,7 +20,7 @@ const app = express();
 
 app.use(express.static(__dirname + "/../public"));
 app.use(express.static(__dirname + "/../admin"));
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
 
 function listResources(Model) {
@@ -103,8 +102,8 @@ function resolveColorQuery(category) {
                             $gte: 69
                         },
                         l: {
-                            $gte: 30,
-                            $lte: 82
+                           $gte: 30,
+                           $lte: 82 
                         }
                     }
 
@@ -173,8 +172,8 @@ function resolveColorQuery(category) {
         case 'purple':
             query = {
                 h: {
-                    $gte: 263,
-                    $lte: 334
+                  $gte: 263,
+                  $lte: 334  
                 },
                 s: {
                     $gte: 20,
