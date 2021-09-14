@@ -16,7 +16,7 @@ function getPaginatedTiles(activeCollection, page) {
     return tiles;
 }
 
-function handlePaginationClick(e) {
+function handlePaginationClick(e, activeCollection) {
     let page = e.target.dataset.page;
     let tiles = getPaginatedTiles(activeCollection, page);
 
@@ -31,11 +31,13 @@ function generatePagination(activeCollection) {
 
     paginationWrap.innerHTML = '';
 
-    for (i = 0; i < pageCount; i++) {
+    for (let i = 0; i < pageCount; i++) {
         let el = document.createElement('li');
         el.innerText = i + 1;
         el.dataset.page = i + 1;
-        el.addEventListener('click', handlePaginationClick);
+        el.addEventListener('click', function(e) {
+            handlePaginationClick(e, activeCollection);
+        });
         if (i === 0) el.classList.add('active');
         paginationWrap.append(el);
     }

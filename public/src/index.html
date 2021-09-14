@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>HH Interview Color App</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;700&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
     <header>
         <div class="container">
             <a class="logo">
-                <img src="./src/img/logo-symbol.svg" alt="Helpful Human" />
+                <img src="./img/logo-symbol.svg" alt="Helpful Human" />
             </a>
             <div class="search-wrap">
                 <input id="search" type="text" placeholder="Search" />
@@ -38,6 +38,16 @@
         <div class="right">
             <div id="main"></div>
             <ul id="pagination"></ul>
+            <div id="active-window">
+                <div class="active-color">
+                    <div class="color"></div>
+                    <div class="active-label">#cffff1</div>
+                </div>
+                <div id="fake-tiles">
+
+                </div>
+                <button id="clear">Clear</button>
+            </div>
         </div>
     </div>
     <template id="swatch-template">

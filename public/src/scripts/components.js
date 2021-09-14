@@ -1,2 +1,3 @@
-import './mainWindow';
-import './sidebar';
+import './components/mainWindow';
+import './components/activeWindow';
+import './components/sidebar';

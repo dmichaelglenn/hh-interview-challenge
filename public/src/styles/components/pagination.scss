@@ -1,9 +1,12 @@
 #pagination {
     display: flex;
     justify-content: center;
-    list-style-type: none;
+    flex-wrap: wrap;
+    max-width: 500px;
     margin: 0 auto;
     padding: 0;
+    list-style-type: none;
+    row-gap: 10px;
 
     li {
         position: relative;
