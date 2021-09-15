@@ -555,7 +555,7 @@ async function searchColorsByHex(hex) {
     return colors;
 }
 
-},{"./variables":"aRp6g","./pagination":"4h2OG","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./components/activeWindow":"9PCLO"}],"aRp6g":[function(require,module,exports) {
+},{"./variables":"aRp6g","./pagination":"4h2OG","./components/activeWindow":"9PCLO","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"aRp6g":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "baseColorsUrl", ()=>baseColorsUrl
@@ -641,7 +641,7 @@ function handlePaginationClick(e) {
 function generatePagination(activeCollection) {
     let pageCount = Math.ceil(activeCollection.length / _variables.perPageCount);
     _variables.paginationWrap.innerHTML = '';
-    for(i = 0; i < pageCount; i++){
+    for(let i = 0; i < pageCount; i++){
         let el = document.createElement('li');
         el.innerText = i + 1;
         el.dataset.page = i + 1;
@@ -876,6 +876,6 @@ const handleSearchInput = _helpers.debounce(async function(e) {
 }, 300);
 searchInput.addEventListener('input', handleSearchInput);
 
-},{"../helpers":"i1e5p","../operations":"gq2x4","../pagination":"4h2OG","../variables":"aRp6g"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
+},{"../helpers":"i1e5p","../variables":"aRp6g","../operations":"gq2x4","../pagination":"4h2OG"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
 
 //# sourceMappingURL=index.f2319df9.js.map
