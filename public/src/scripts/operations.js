@@ -1,5 +1,5 @@
 import { baseColorsUrl, mainWindow, swatchTemplate } from './variables';
-import { generatePagination } from './pagination';
+import { generatePagination, getPaginatedTiles } from './pagination';
 import { openActiveWindow } from './components/activeWindow';
 
 function setActiveCollection(newCollection) {
@@ -28,6 +28,13 @@ function placeTiles(tiles) {
     });
 }
 
+async function setInitialState() {
+    let colors = await getAllColors();
+    setActiveCollection(colors);
+
+    let tiles = getPaginatedTiles(activeCollection, 1);
+    placeTiles(tiles);
+}
 
 async function getAllColors() {
     let res = await fetch(baseColorsUrl);
@@ -57,4 +64,13 @@ async function getColorByHex(hex) {
     return color;
 }
 
-export { setActiveCollection, setActiveColor, placeTiles, getAllColors, getColorsByCategory, getRandomColor, getColorByHex }
+async function searchColorsByHex(hex) {
+    if (hex.includes('#')) {
+        hex = hex.replace('#', '');
+    }
+    let res = await fetch(baseColorsUrl + `/search/${hex}`);
+    let colors = await res.json();
+    return colors;
+}
+
+export { setActiveCollection, setActiveColor, placeTiles, setInitialState, getAllColors, getColorsByCategory, getRandomColor, getColorByHex, searchColorsByHex }

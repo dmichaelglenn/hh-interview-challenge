@@ -224,10 +224,10 @@ app.get("/colors/:hex", function (req, res) {
     };
     getResourcesByQuery(Color, query)(req, res);
 });
-app.get("/colors/search/:search", function (req, res) {
+app.get("/colors/search/:hex", function (req, res) {
     let query = {
         hex: {
-            $regex: req.params.search,
+            $regex: req.params.hex,
             $options: "i"
         }
     };
