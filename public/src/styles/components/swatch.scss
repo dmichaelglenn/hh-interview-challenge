@@ -30,7 +30,7 @@
     }
 
     .remove-tile {
-        display: flex;
+        display: none;
         justify-content: center;
         align-items: center;
         width: 30px;
@@ -44,4 +44,8 @@
         background-color: $white-pure;
         border-radius: 30px;
     }
+}
+
+.admin .remove-tile {
+    display: flex;
 }

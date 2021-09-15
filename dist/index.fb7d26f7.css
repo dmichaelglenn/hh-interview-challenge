@@ -491,7 +491,7 @@ header .container {
   line-height: 30px;
 }
 .swatch .remove-tile {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   width: 30px;
@@ -504,6 +504,9 @@ header .container {
   border: 1px solid #ADADAD;
   background-color: #ffffff;
   border-radius: 30px;
+}
+.admin .remove-tile {
+  display: flex;
 }
 #pagination {
   display: flex;
