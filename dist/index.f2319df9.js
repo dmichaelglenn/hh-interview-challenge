@@ -856,7 +856,8 @@ function handleGeneratorClick() {
     console.log('going with count', count);
     generateAndAddRandomColors(count);
 }
-if (document.getElementById('generate-by-count').length > 0) document.getElementById('generate-by-count').addEventListener('click', handleGeneratorClick);
+console.log(document.getElementById('generate-by-count'));
+if (document.getElementById('generate-by-count')) document.getElementById('generate-by-count').addEventListener('click', handleGeneratorClick);
  // export { generateAndAddRandomColors };
  // var randomColor = Math.floor(Math.random()*16777215).toString(16);
 

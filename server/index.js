@@ -76,7 +76,7 @@ function resolveColorQuery(category) {
         case 'gray':
             query = {
                 s: {
-                    $lte: 30
+                    $lte: 15
                 }
             }
             break;
@@ -85,7 +85,7 @@ function resolveColorQuery(category) {
                 $or: [
                     {
                         h: {
-                            $gte: 15
+                            $lte: 15
                         },
                         s: {
                             $gte: 85
@@ -136,6 +136,7 @@ function resolveColorQuery(category) {
                     $gte: 50
                 },
                 l: {
+                    $gte: 45,
                     $lte: 90
                 }
             }
@@ -158,15 +159,15 @@ function resolveColorQuery(category) {
         case 'blue':
             query = {
                 h: {
-                    $gte: 161,
-                    $lte: 262
+                    $gte: 170,
+                    $lte: 255
                 },
                 s: {
                     $gte: 25
                 },
                 l: {
                     $gte: 20,
-                    $lte: 90
+                    $lte: 85
                 }
             }
             break;

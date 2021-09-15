@@ -45,8 +45,9 @@ function handleGeneratorClick() {
     console.log('going with count', count);
     generateAndAddRandomColors(count);
 }
+console.log(document.getElementById('generate-by-count'));
 
-if (document.getElementById('generate-by-count').length > 0) {
+if (document.getElementById('generate-by-count')) {
     document.getElementById('generate-by-count').addEventListener('click', handleGeneratorClick);
 }
 
