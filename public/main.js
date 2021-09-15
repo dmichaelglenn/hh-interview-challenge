@@ -1,5 +1,6 @@
 import './src/scripts/components';
 
+//not ideal, were this going to production I'd do this differently but
 window.activeCollection  = {};
 
 let urlParams = new URLSearchParams(window.location.search);
