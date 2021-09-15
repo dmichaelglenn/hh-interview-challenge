@@ -1,38 +1,4 @@
 @import './src/styles/normalize.css';
-@import './src/styles/helpers.scss';
+@import './src/styles/general.scss';
 @import './src/styles/components/main.scss';
 
-* {
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Source Serif Pro', serif;
-    color: $gray-dark;
-}
-
-.content {
-    display: flex;
-    height: 100%;
-    min-height: calc(100vh - 100px);
-
-    .right {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        position: relative;
-
-        #main {
-            width: 100%;
-            min-height: 1023px;
-        }
-    }
-}
-
-.generator {
-    display: none;
-}
-
-.admin .generator {
-    display: block;
-}
