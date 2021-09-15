@@ -35,14 +35,15 @@
                 <li class="color-category">Gray</li>
             </ul>
             <div class="generator">
-                <input type="number" id="generator-count">
+                <label for="generator-count">Generate X new random colors:</label>
+                <input type="number" id="generator-count" name="generator-count" min="1" max="100" placeholder="Maxiumum of 100">
                 <button id="generate-by-count">Generate!</button>
             </div>
         </div>
         <div class="right">
             <div id="main"></div>
             <ul id="pagination"></ul>
-            <div id="active-window">
+            <div id="active-window" class="hide-initially">
                 <div class="active-color">
                     <div class="color"></div>
                     <div class="active-label">#cffff1</div>

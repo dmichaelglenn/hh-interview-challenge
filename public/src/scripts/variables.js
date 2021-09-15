@@ -1,4 +1,12 @@
-const baseColorsUrl = 'http://localhost:8080/colors';
+let baseColorsUrl = '';
+
+if (window.location.port === '1234') {
+    // it's parcel live reload
+    baseColorsUrl = 'http://localhost:8080/colors';
+} else {
+    baseColorsUrl = '/colors';
+}
+
 const perPageCount = 12;
 const mainWindow = document.getElementById('main');
 const activeWindow = document.getElementById('active-window');

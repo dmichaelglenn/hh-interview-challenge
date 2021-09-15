@@ -9,7 +9,7 @@ body {
     color: $gray-dark;
 }
 
-input[type="text"] {
+input[type="text"], input[type="number"] {
     height: 60px;
     width: 320px;
     font-family: 'Helvetica', sans-serif;

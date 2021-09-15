@@ -8,4 +8,3 @@ let adminStatus = urlParams.get('admin');
 if (adminStatus === 'yes') {
     document.querySelector('body').classList.add('admin');
 }
-

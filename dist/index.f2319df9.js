@@ -572,7 +572,10 @@ parcelHelpers.export(exports, "paginationWrap", ()=>paginationWrap
 );
 parcelHelpers.export(exports, "swatchTemplate", ()=>swatchTemplate
 );
-const baseColorsUrl = 'http://localhost:8080/colors';
+let baseColorsUrl = '';
+if (window.location.port === '1234') // it's parcel live reload
+baseColorsUrl = 'http://localhost:8080/colors';
+else baseColorsUrl = '/colors';
 const perPageCount = 12;
 const mainWindow = document.getElementById('main');
 const activeWindow = document.getElementById('active-window');
@@ -659,7 +662,6 @@ parcelHelpers.export(exports, "openActiveWindow", ()=>openActiveWindow
 parcelHelpers.export(exports, "closeActiveWindow", ()=>closeActiveWindow
 );
 var _variables = require("../variables");
-var _operations = require("../operations");
 var _helpers = require("../helpers");
 function generateFakeTile(color) {
     let hex = _helpers.HSLToHex(color.h, color.s, color.l);
@@ -708,9 +710,10 @@ function openActiveWindow(color) {
 function closeActiveWindow() {
     _variables.activeWindow.classList.remove('open');
 }
+_variables.activeWindow.style.transition = 'opacity 0.2s ease-in-out';
 document.getElementById('clear').addEventListener('click', closeActiveWindow);
 
-},{"../variables":"aRp6g","../operations":"gq2x4","../helpers":"i1e5p","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"i1e5p":[function(require,module,exports) {
+},{"../variables":"aRp6g","../helpers":"i1e5p","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"i1e5p":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "HSLToHex", ()=>HSLToHex

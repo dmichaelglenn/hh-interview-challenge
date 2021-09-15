@@ -1,5 +1,4 @@
 import { activeWindow, fakeTiles, swatchTemplate } from '../variables';
-import { setActiveColor } from '../operations';
 import { HSLToHex } from '../helpers';
 
 function generateFakeTile(color) {
@@ -56,6 +55,7 @@ function closeActiveWindow() {
     activeWindow.classList.remove('open');
 }
 
+activeWindow.style.transition = 'opacity 0.2s ease-in-out';
 document.getElementById('clear').addEventListener('click', closeActiveWindow);
 
 export { openActiveWindow, closeActiveWindow }

@@ -354,7 +354,7 @@ body {
   font-family: "Source Serif Pro", serif;
   color: #363C3C;
 }
-input[type=text] {
+input[type=text], input[type=number] {
   height: 60px;
   width: 320px;
   font-family: "Helvetica", sans-serif;
@@ -363,7 +363,7 @@ input[type=text] {
   padding-left: 21px;
   border-radius: 10px;
 }
-input[type=text]::placeholder {
+input[type=text]::placeholder, input[type=number]::placeholder {
   opacity: 59.56%;
 }
 button {
@@ -445,6 +445,17 @@ header .container {
   margin-bottom: 18px;
   cursor: pointer;
 }
+#sidebar .generator {
+  margin-top: 40px;
+}
+#sidebar .generator label {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+#sidebar .generator input[type=number] {
+  max-width: 100%;
+  margin: 5px 0;
+}
 .swatch {
   height: 261px;
   padding: 20px 27px;
@@ -503,7 +514,7 @@ header .container {
   background: #363C3C;
 }
 #active-window {
-  display: none;
+  display: flex;
   flex-direction: column;
   position: absolute;
   top: 0;
@@ -513,9 +524,13 @@ header .container {
   min-height: 100%;
   padding: 80px 20px 40px 20px;
   background-color: #ffffff;
+  opacity: 0;
+  transition: all 200ms ease-in-out;
+  pointer-events: none;
 }
 #active-window.open {
-  display: flex;
+  opacity: 1;
+  pointer-events: initial;
 }
 #active-window .active-color {
   display: flex;
