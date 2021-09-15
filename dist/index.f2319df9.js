@@ -455,71 +455,25 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"8fVck":[function(require,module,exports) {
-var _variables = require("./src/scripts/variables");
-var _operations = require("./src/scripts/operations");
 var _components = require("./src/scripts/components");
-const urlParams = new URLSearchParams(window.location.search);
-const adminStatus = urlParams.get('admin');
+window.activeCollection = {
+};
+let urlParams = new URLSearchParams(window.location.search);
+let adminStatus = urlParams.get('admin');
 if (adminStatus === 'yes') document.querySelector('body').classList.add('admin');
 
-},{"./src/scripts/variables":"aRp6g","./src/scripts/operations":"gq2x4","./src/scripts/components":"7u8Xe"}],"aRp6g":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "baseColorsUrl", ()=>baseColorsUrl
-);
-parcelHelpers.export(exports, "perPageCount", ()=>perPageCount
-);
-parcelHelpers.export(exports, "mainWindow", ()=>mainWindow
-);
-parcelHelpers.export(exports, "activeWindow", ()=>activeWindow
-);
-parcelHelpers.export(exports, "fakeTiles", ()=>fakeTiles
-);
-parcelHelpers.export(exports, "paginationWrap", ()=>paginationWrap
-);
-parcelHelpers.export(exports, "swatchTemplate", ()=>swatchTemplate
-);
-const baseColorsUrl = 'http://localhost:8080/colors';
-const perPageCount = 12;
-const mainWindow = document.getElementById('main');
-const activeWindow = document.getElementById('active-window');
-const fakeTiles = document.getElementById('fake-tiles');
-const paginationWrap = document.getElementById('pagination');
-const swatchTemplate = document.getElementById("swatch-template");
+},{"./src/scripts/components":"7u8Xe"}],"7u8Xe":[function(require,module,exports) {
+var _mainWindow = require("./components/mainWindow");
+var _activeWindow = require("./components/activeWindow");
+var _sidebar = require("./components/sidebar");
+var _colorGenerator = require("./components/colorGenerator");
+var _search = require("./components/search");
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"JacNc":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule') return;
-        // Skip duplicate re-exports when they have the same value.
-        if (key in dest && dest[key] === source[key]) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
+},{"./components/mainWindow":"iRG7P","./components/activeWindow":"9PCLO","./components/sidebar":"7D917","./components/colorGenerator":"a0c80","./components/search":"jCjYn"}],"iRG7P":[function(require,module,exports) {
+var _operations = require("../operations");
+_operations.setInitialState();
 
-},{}],"gq2x4":[function(require,module,exports) {
+},{"../operations":"gq2x4"}],"gq2x4":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "setActiveCollection", ()=>setActiveCollection
@@ -601,7 +555,64 @@ async function searchColorsByHex(hex) {
     return colors;
 }
 
-},{"./variables":"aRp6g","./pagination":"4h2OG","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./components/activeWindow":"9PCLO"}],"4h2OG":[function(require,module,exports) {
+},{"./variables":"aRp6g","./pagination":"4h2OG","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./components/activeWindow":"9PCLO"}],"aRp6g":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "baseColorsUrl", ()=>baseColorsUrl
+);
+parcelHelpers.export(exports, "perPageCount", ()=>perPageCount
+);
+parcelHelpers.export(exports, "mainWindow", ()=>mainWindow
+);
+parcelHelpers.export(exports, "activeWindow", ()=>activeWindow
+);
+parcelHelpers.export(exports, "fakeTiles", ()=>fakeTiles
+);
+parcelHelpers.export(exports, "paginationWrap", ()=>paginationWrap
+);
+parcelHelpers.export(exports, "swatchTemplate", ()=>swatchTemplate
+);
+const baseColorsUrl = 'http://localhost:8080/colors';
+const perPageCount = 12;
+const mainWindow = document.getElementById('main');
+const activeWindow = document.getElementById('active-window');
+const fakeTiles = document.getElementById('fake-tiles');
+const paginationWrap = document.getElementById('pagination');
+const swatchTemplate = document.getElementById("swatch-template");
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"JacNc":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule') return;
+        // Skip duplicate re-exports when they have the same value.
+        if (key in dest && dest[key] === source[key]) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"4h2OG":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getPaginatedTiles", ()=>getPaginatedTiles
@@ -782,18 +793,7 @@ function debounce(func, wait, immediate) {
     };
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"7u8Xe":[function(require,module,exports) {
-var _mainWindow = require("./components/mainWindow");
-var _activeWindow = require("./components/activeWindow");
-var _sidebar = require("./components/sidebar");
-var _colorGenerator = require("./components/colorGenerator");
-var _search = require("./components/search");
-
-},{"./components/mainWindow":"iRG7P","./components/activeWindow":"9PCLO","./components/sidebar":"7D917","./components/colorGenerator":"a0c80","./components/search":"jCjYn"}],"iRG7P":[function(require,module,exports) {
-var _operations = require("../operations");
-_operations.setInitialState();
-
-},{"../operations":"gq2x4"}],"7D917":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"7D917":[function(require,module,exports) {
 var _activeWindow = require("./activeWindow");
 var _operations = require("../operations");
 var _pagination = require("../pagination");

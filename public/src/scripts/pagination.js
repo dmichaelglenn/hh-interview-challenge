@@ -31,7 +31,7 @@ function generatePagination(activeCollection) {
 
     paginationWrap.innerHTML = '';
 
-    for (i = 0; i < pageCount; i++) {
+    for (let i = 0; i < pageCount; i++) {
         let el = document.createElement('li');
         el.innerText = i + 1;
         el.dataset.page = i + 1;

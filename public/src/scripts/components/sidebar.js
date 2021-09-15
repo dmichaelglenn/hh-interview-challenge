@@ -1,5 +1,5 @@
 import { openActiveWindow } from "./activeWindow";
-import { setActiveCollection, setActiveColor, getColorsByCategory, getRandomColor, placeTiles } from "../operations";
+import { setActiveCollection, getColorsByCategory, getRandomColor, placeTiles } from "../operations";
 import { getPaginatedTiles } from "../pagination";
 
 async function handleCategoryClick(e) {
