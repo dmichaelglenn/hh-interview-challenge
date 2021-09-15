@@ -224,6 +224,15 @@ app.get("/colors/:hex", function (req, res) {
     };
     getResourcesByQuery(Color, query)(req, res);
 });
+app.get("/colors/search/:search", function (req, res) {
+    let query = {
+        hex: {
+            $regex: req.params.search,
+            $options: "i"
+        }
+    };
+    getResourcesByQuery(Color, query)(req, res);
+});
 app.post("/colors", createResource(Color));
 
 const server = app.listen(port, function () {

@@ -1,4 +1,4 @@
-const baseColorsUrl = '/colors';
+const baseColorsUrl = 'http://localhost:8080/colors';
 const perPageCount = 12;
 const mainWindow = document.getElementById('main');
 const activeWindow = document.getElementById('active-window');
