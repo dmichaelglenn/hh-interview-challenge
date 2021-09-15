@@ -11,23 +11,6 @@ function setActiveColor(color) {
     activeColor = color;    
 }
 
-function placeTiles(tiles) {
-    mainWindow.innerHTML = '';
-
-    tiles.forEach(color => {
-        const tile = swatchTemplate.content.firstElementChild.cloneNode(true);
-        tile.querySelector('.color').style.backgroundColor = `#${color.hex}`;
-        tile.querySelector('.label').innerText = `#${color.hex}`
-        tile.dataset.id = color._id;
-        tile.dataset.hex = color.hex;
-        tile.addEventListener('click', function() {
-            openActiveWindow(color);
-        });
-
-        mainWindow.append(tile);
-    });
-}
-
 async function setInitialState() {
     let colors = await getAllColors();
     setActiveCollection(colors);
@@ -71,6 +54,53 @@ async function searchColorsByHex(hex) {
     let res = await fetch(baseColorsUrl + `/search/${hex}`);
     let colors = await res.json();
     return colors;
+}
+
+function removeColorFromDatabase(id) {
+    fetch(baseColorsUrl, {
+        method: 'DELETE', 
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({id: id}),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+function handleRemoveTileClick(e) {
+    let id = e.target.parentNode.dataset.id;
+    removeColorFromDatabase(id);
+    e.target.remove();
+}
+
+function placeTiles(tiles) {
+    mainWindow.innerHTML = '';
+
+    tiles.forEach(color => {
+        let tile = swatchTemplate.content.firstElementChild.cloneNode(true);
+        tile.querySelector('.color').style.backgroundColor = `#${color.hex}`;
+        tile.querySelector('.label').innerText = `#${color.hex}`
+        tile.dataset.id = color._id;
+        tile.dataset.hex = color.hex;
+
+        let remover = document.createElement('div');
+        remover.classList.add('remove-tile');
+        remover.innerHTML = 'x';
+        remover.addEventListener('click', handleRemoveTileClick);
+        tile.append(remover);
+
+        tile.addEventListener('click', function() {
+            openActiveWindow(color);
+        });
+
+        mainWindow.append(tile);
+    });
 }
 
 export { setActiveCollection, setActiveColor, placeTiles, setInitialState, getAllColors, getColorsByCategory, getRandomColor, getColorByHex, searchColorsByHex }

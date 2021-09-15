@@ -504,20 +504,6 @@ function setActiveCollection(newCollection) {
 function setActiveColor(color) {
     activeColor = color;
 }
-function placeTiles(tiles) {
-    _variables.mainWindow.innerHTML = '';
-    tiles.forEach((color)=>{
-        const tile = _variables.swatchTemplate.content.firstElementChild.cloneNode(true);
-        tile.querySelector('.color').style.backgroundColor = `#${color.hex}`;
-        tile.querySelector('.label').innerText = `#${color.hex}`;
-        tile.dataset.id = color._id;
-        tile.dataset.hex = color.hex;
-        tile.addEventListener('click', function() {
-            _activeWindow.openActiveWindow(color);
-        });
-        _variables.mainWindow.append(tile);
-    });
-}
 async function setInitialState() {
     let colors = await getAllColors();
     setActiveCollection(colors);
@@ -553,6 +539,46 @@ async function searchColorsByHex(hex) {
     let res = await fetch(_variables.baseColorsUrl + `/search/${hex}`);
     let colors = await res.json();
     return colors;
+}
+function removeColorFromDatabase(id) {
+    fetch(_variables.baseColorsUrl, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id
+        })
+    }).then((response)=>response.json()
+    ).then((data)=>{
+        console.log('Success:', data);
+    }).catch((error)=>{
+        console.error('Error:', error);
+    });
+}
+function handleRemoveTileClick(e) {
+    let id = e.target.parentNode.dataset.id;
+    removeColorFromDatabase(id);
+    e.target.remove();
+}
+function placeTiles(tiles) {
+    _variables.mainWindow.innerHTML = '';
+    tiles.forEach((color)=>{
+        let tile = _variables.swatchTemplate.content.firstElementChild.cloneNode(true);
+        tile.querySelector('.color').style.backgroundColor = `#${color.hex}`;
+        tile.querySelector('.label').innerText = `#${color.hex}`;
+        tile.dataset.id = color._id;
+        tile.dataset.hex = color.hex;
+        let remover = document.createElement('div');
+        remover.classList.add('remove-tile');
+        remover.innerHTML = 'x';
+        remover.addEventListener('click', handleRemoveTileClick);
+        tile.append(remover);
+        tile.addEventListener('click', function() {
+            _activeWindow.openActiveWindow(color);
+        });
+        _variables.mainWindow.append(tile);
+    });
 }
 
 },{"./variables":"aRp6g","./pagination":"4h2OG","./components/activeWindow":"9PCLO","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"aRp6g":[function(require,module,exports) {

@@ -382,6 +382,16 @@ button {
   border-radius: 10px;
   cursor: pointer;
 }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
 .container {
   max-width: 1440px;
   margin: 0 auto;
@@ -447,10 +457,6 @@ header .container {
 }
 #sidebar .generator {
   margin-top: 40px;
-}
-#sidebar .generator label {
-  font-size: 18px;
-  margin-bottom: 10px;
 }
 #sidebar .generator input[type=number] {
   max-width: 100%;

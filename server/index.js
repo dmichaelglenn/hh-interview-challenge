@@ -69,6 +69,15 @@ function createResource(Model) {
     };
 }
 
+function deleteResource(Model) {
+    return function (req, res, next) {
+        Model.findByIdAndRemove(req.body.id, function (err, doc) {
+            if (err) return next(err);
+            res.json(doc);
+        });
+    };
+}
+
 function resolveColorQuery(category) {
     let query;
 
@@ -236,7 +245,7 @@ app.get("/colors/search/:hex", function (req, res) {
     getResourcesByQuery(Color, query)(req, res);
 });
 app.post("/colors", createResource(Color));
-
+app.delete("/colors/", deleteResource(Color));
 const server = app.listen(port, function () {
     console.log("now running on port", port);
 })
