@@ -58,4 +58,4 @@ function closeActiveWindow() {
 
 document.getElementById('clear').addEventListener('click', closeActiveWindow);
 
-export { openActiveWindow }
+export { openActiveWindow, closeActiveWindow }

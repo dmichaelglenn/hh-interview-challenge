@@ -656,6 +656,8 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "openActiveWindow", ()=>openActiveWindow
 );
+parcelHelpers.export(exports, "closeActiveWindow", ()=>closeActiveWindow
+);
 var _variables = require("../variables");
 var _operations = require("../operations");
 var _helpers = require("../helpers");
@@ -798,6 +800,7 @@ var _activeWindow = require("./activeWindow");
 var _operations = require("../operations");
 var _pagination = require("../pagination");
 async function handleCategoryClick(e) {
+    _activeWindow.closeActiveWindow();
     let colors = await _operations.getColorsByCategory(e.target.innerText.toLowerCase());
     _operations.setActiveCollection(colors);
     let tiles = _pagination.getPaginatedTiles(activeCollection, 1);
@@ -862,8 +865,10 @@ var _helpers = require("../helpers");
 var _variables = require("../variables");
 var _operations = require("../operations");
 var _pagination = require("../pagination");
+var _activeWindow = require("./activeWindow");
 const searchInput = document.getElementById('search');
 const handleSearchInput = _helpers.debounce(async function(e) {
+    _activeWindow.closeActiveWindow();
     if (e.target.value === '' || e.target.value === ' ') {
         _operations.setInitialState();
         return;
@@ -876,6 +881,6 @@ const handleSearchInput = _helpers.debounce(async function(e) {
 }, 300);
 searchInput.addEventListener('input', handleSearchInput);
 
-},{"../helpers":"i1e5p","../variables":"aRp6g","../operations":"gq2x4","../pagination":"4h2OG"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
+},{"../helpers":"i1e5p","../variables":"aRp6g","../operations":"gq2x4","../pagination":"4h2OG","./activeWindow":"9PCLO"}]},["a9hZE","8fVck"], "8fVck", "parcelRequirefb48")
 
 //# sourceMappingURL=index.f2319df9.js.map

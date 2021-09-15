@@ -1,8 +1,10 @@
-import { openActiveWindow } from "./activeWindow";
+import { openActiveWindow, closeActiveWindow } from "./activeWindow";
 import { setActiveCollection, getColorsByCategory, getRandomColor, placeTiles } from "../operations";
 import { getPaginatedTiles } from "../pagination";
 
 async function handleCategoryClick(e) {
+    closeActiveWindow();
+    
     let colors = await getColorsByCategory(e.target.innerText.toLowerCase());
     setActiveCollection(colors);
 

@@ -2,10 +2,13 @@ import { debounce } from '../helpers';
 import { mainWindow } from '../variables';
 import { setActiveCollection, setInitialState, searchColorsByHex, placeTiles } from "../operations";
 import { getPaginatedTiles } from "../pagination";
+import { closeActiveWindow } from './activeWindow';
 
 const searchInput = document.getElementById('search');
 
 const handleSearchInput = debounce(async function(e) {
+    closeActiveWindow();
+    
     if (e.target.value === '' || e.target.value === ' ') {
         setInitialState();
         return;
