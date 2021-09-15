@@ -39,7 +39,6 @@ async function getRandomColor() {
 
 async function getColorByHex(hex) {
     if (hex.includes('#')) {
-        console.log('removed a hash');
         hex = hex.replace('#', '');
     }
     let res = await fetch(baseColorsUrl + `/${hex}`);

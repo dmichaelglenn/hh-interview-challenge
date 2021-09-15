@@ -4,7 +4,7 @@ import { getPaginatedTiles } from "../pagination";
 
 async function handleCategoryClick(e) {
     closeActiveWindow();
-    
+
     let colors = await getColorsByCategory(e.target.innerText.toLowerCase());
     setActiveCollection(colors);
 
@@ -18,7 +18,6 @@ async function handleRandomClick(e) {
 }
 
 document.querySelectorAll('.color-category').forEach(function(el) {
-    console.log(el);
     el.addEventListener('click', handleCategoryClick);
 })
 

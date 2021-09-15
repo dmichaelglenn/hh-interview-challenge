@@ -52,7 +52,6 @@ function getResourcesByQuery(Model, query) {
         Model.find(query).sort({ "_id": "desc" }).exec(function (err, docs) {
             if (err) console.log(err);
             if (err) return next(err);
-            console.log(docs);
             res.json(docs);
         })
 

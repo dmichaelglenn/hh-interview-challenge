@@ -44,7 +44,6 @@ function generateAndPlaceFakeTiles(baseColor) {
 }
 
 function openActiveWindow(color) {
-    console.log('opening active window for ', color.hex)
     activeWindow.querySelector('.active-color').style.backgroundColor = `#${color.hex}`;
     activeWindow.querySelector('.active-label').innerText = `#${color.hex}`;
     generateAndPlaceFakeTiles(color);

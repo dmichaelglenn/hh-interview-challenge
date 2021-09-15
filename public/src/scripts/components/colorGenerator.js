@@ -11,7 +11,6 @@ function generateAndAddRandomColors(count) {
         let exists = getColorByHex(hex);
 
         if (exists.length > 0) {
-            console.log('ima skip this 1 chief');
             i--;
             continue;
         }
@@ -42,10 +41,8 @@ function generateAndAddRandomColors(count) {
 
 function handleGeneratorClick() {
     let count = document.getElementById('generator-count').value;
-    console.log('going with count', count);
     generateAndAddRandomColors(count);
 }
-console.log(document.getElementById('generate-by-count'));
 
 if (document.getElementById('generate-by-count')) {
     document.getElementById('generate-by-count').addEventListener('click', handleGeneratorClick);
