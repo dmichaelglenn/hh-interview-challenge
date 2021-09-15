@@ -3,6 +3,7 @@
     padding: 20px 27px;
     box-sizing: content-box;
     cursor: pointer;
+    position: relative;
 
     .inner {
         display: flex;
@@ -26,5 +27,21 @@
             font-size: 24px;
             line-height: 30px;
         }
+    }
+
+    .remove-tile {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        line-height: 1;
+        border: 1px solid $gray-border;
+        background-color: $white-pure;
+        border-radius: 30px;
     }
 }

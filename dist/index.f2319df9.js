@@ -559,7 +559,7 @@ function removeColorFromDatabase(id) {
 function handleRemoveTileClick(e) {
     let id = e.target.parentNode.dataset.id;
     removeColorFromDatabase(id);
-    e.target.remove();
+    e.target.parentNode.remove();
 }
 function placeTiles(tiles) {
     _variables.mainWindow.innerHTML = '';
@@ -574,7 +574,8 @@ function placeTiles(tiles) {
         remover.innerHTML = 'x';
         remover.addEventListener('click', handleRemoveTileClick);
         tile.append(remover);
-        tile.addEventListener('click', function() {
+        tile.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-tile')) return;
             _activeWindow.openActiveWindow(color);
         });
         _variables.mainWindow.append(tile);
